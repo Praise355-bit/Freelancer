@@ -209,30 +209,28 @@ function toast(msg){
   setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
 }
 
-/* ============ AI CALL ============ */
-async function askAI(userPrompt, systemPrompt, jsonMode){
-  try{
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-6',
-        max_tokens: 1000,
-        system: systemPrompt + (jsonMode ? '\n\nRespond ONLY with valid JSON. No markdown fences, no preamble, no commentary.' : ''),
-        messages:[{role:'user', content: userPrompt}]
-      })
-    });
-    const data = await res.json();
-    let text = (data.content||[]).map(b=>b.text||'').join('\n').trim();
-    if(jsonMode){
-      text = text.replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
-      return JSON.parse(text);
+const Groq = {
+  // Calls our own Vercel serverless function instead of api.groq.com directly.
+  // No key lives in the browser anymore.
+  proxyURL: '/api/groq',
+
+  async chat(prompt, { temperature = 0.6, max_tokens = 2048 } = {}) {
+    try {
+      const resp = await fetch(this.proxyURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, temperature, max_tokens })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        throw new Error(data.error || `API error ${resp.status}`);
+      }
+      return data.content || '';
+    } catch (err) {
+      if (err.name === 'TypeError') { throw new Error('Network error — please check your internet connection.'); }
+      throw err;
     }
-    return text;
-  }catch(e){
-    console.error('AI error', e);
-    throw e;
-  }
+  },
 }
 
 /* ============ STATE ============ */
