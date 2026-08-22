@@ -1,91 +1,65 @@
-// api/groq.js
-// Vercel Edge Function — proxies chat requests to Groq using server-side keys.
-// The keys never reach the browser; only this function sees them.
+// /api/groq.js
+// Vercel serverless function (Node runtime). Deploy this file at that exact
+// path in your project and it becomes reachable at POST /api/groq.
+//
+// Set GROQ_API_KEY as an environment variable in your Vercel project
+// settings (Project Settings -> Environment Variables). Never put the key
+// in the frontend code.
+//
+// Get a key at https://console.groq.com
 
-export const config = { runtime: 'edge' };
-
-const MODEL = 'llama-3.3-70b-versatile';
-const BASE_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
-// Read keys from a single env var: comma-separated list, no spaces needed
-// (trimmed automatically). Set GROQ_KEYS in Vercel → Project → Settings → Environment Variables.
-const KEYS = (process.env.GROQ_KEYS || '')
-  .split(',')
-  .map((k) => k.trim())
-  .filter(Boolean);
-
-function isKeyExhaustedStatus(status) {
-  return status === 401 || status === 403 || status === 429 || status === 402;
-}
-
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
-}
-
-export default async function handler(req) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return json({ error: 'Method not allowed' }, 405);
-  }
-  if (KEYS.length === 0) {
-    return json({ error: 'No API keys configured on the server' }, 500);
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  let body;
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'Server is missing GROQ_API_KEY' });
+  }
+
+  const { system = '', prompt = '', json = false, temperature = 0.7, max_tokens = 1500 } = req.body || {};
+
+  if (!prompt) {
+    return res.status(400).json({ error: 'Missing "prompt" in request body' });
+  }
+
+  const messages = [];
+  if (system) messages.push({ role: 'system', content: system });
+  messages.push({ role: 'user', content: prompt });
+
+  const body = {
+    model: 'llama-3.3-70b-versatile', // swap for any current Groq-hosted model
+    messages,
+    temperature,
+    max_tokens
+  };
+
+  // Ask Groq to guarantee valid JSON back when the caller wants structured data.
+  if (json) {
+    body.response_format = { type: 'json_object' };
+  }
+
   try {
-    body = await req.json();
-  } catch {
-    return json({ error: 'Invalid JSON body' }, 400);
-  }
+    const groqResp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(body)
+    });
 
-  const { prompt, temperature = 0.6, max_tokens = 2048 } = body || {};
-  if (!prompt || typeof prompt !== 'string') {
-    return json({ error: 'Missing prompt' }, 400);
-  }
-  // Basic sanity caps so one request can't rack up runaway usage
-  const safeTemp = Math.min(Math.max(Number(temperature) || 0.6, 0), 2);
-  const safeMaxTokens = Math.min(Math.max(parseInt(max_tokens, 10) || 2048, 1), 8192);
+    const data = await groqResp.json();
 
-  let lastMessage = 'All AI keys are currently unavailable. Please try again later.';
-
-  for (const key of KEYS) {
-    try {
-      const resp = await fetch(BASE_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${key}`,
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [{ role: 'user', content: prompt }],
-          temperature: safeTemp,
-          max_tokens: safeMaxTokens,
-        }),
-      });
-
-      if (!resp.ok) {
-        if (isKeyExhaustedStatus(resp.status)) {
-          // This key is done (rate-limited / out of credits / invalid) — try the next one
-          lastMessage = `Upstream key exhausted (HTTP ${resp.status})`;
-          continue;
-        }
-        const errData = await resp.json().catch(() => ({}));
-        return json(
-          { error: errData.error?.message || `API error ${resp.status}` },
-          resp.status
-        );
-      }
-
-      const data = await resp.json();
-      const content = data.choices?.[0]?.message?.content || '';
-      return json({ content });
-    } catch (err) {
-      lastMessage = err.message || 'Network error contacting Groq';
+    if (!groqResp.ok) {
+      return res.status(groqResp.status).json({ error: data.error?.message || 'Groq request failed' });
     }
-  }
 
-  return json({ error: lastMessage }, 503);
+    const content = data.choices?.[0]?.message?.content || '';
+    return res.status(200).json({ content });
+  } catch (err) {
+    console.error('Groq proxy error:', err);
+    return res.status(502).json({ error: 'Failed to reach Groq' });
+  }
 }
