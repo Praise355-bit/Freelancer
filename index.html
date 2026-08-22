@@ -209,28 +209,54 @@ function toast(msg){
   setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
 }
 
-const Groq = {
-  // Calls our own Vercel serverless function instead of api.groq.com directly.
-  // No key lives in the browser anymore.
-  proxyURL: '/api/groq',
+/* ============ AI ============
+   Single entry point every feature in this app calls. Talks directly to the
+   Anthropic Messages API. expectJSON=true means the caller wants a parsed
+   object/array back (the system prompt should ask the model for JSON only).
+*/
+async function askAI(userMessage, systemPrompt, expectJSON = false){
+  const jsonInstruction = expectJSON
+    ? '\n\nRespond with ONLY valid JSON — no markdown code fences, no preamble, no trailing commentary. Just the raw JSON object or array.'
+    : '';
+  const combinedPrompt = `${systemPrompt || ''}${jsonInstruction}\n\n${userMessage}`.trim();
 
-  async chat(prompt, { temperature = 0.6, max_tokens = 2048 } = {}) {
-    try {
-      const resp = await fetch(this.proxyURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, temperature, max_tokens })
-      });
-      const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) {
-        throw new Error(data.error || `API error ${resp.status}`);
-      }
-      return data.content || '';
-    } catch (err) {
-      if (err.name === 'TypeError') { throw new Error('Network error — please check your internet connection.'); }
-      throw err;
+  let resp;
+  try{
+    resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: combinedPrompt }]
+      })
+    });
+  }catch(err){
+    throw new Error('Network error reaching the AI — please check your connection.');
+  }
+
+  const data = await resp.json().catch(()=>({}));
+  if(!resp.ok){
+    throw new Error(data.error?.message || `AI request failed (${resp.status})`);
+  }
+
+  const text = (data.content || [])
+    .map(block => block.type === 'text' ? block.text : '')
+    .join('')
+    .trim();
+
+  if(!expectJSON) return text;
+
+  let cleaned = text.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
+  try{
+    return JSON.parse(cleaned);
+  }catch(e){
+    const match = cleaned.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if(match){
+      try{ return JSON.parse(match[0]); }catch(e2){ /* fall through */ }
     }
-  },
+    throw new Error('The AI response wasn\'t valid JSON — please try again.');
+  }
 }
 
 /* ============ STATE ============ */
@@ -453,6 +479,7 @@ async function runHeroDemo(){
     `;
     result.classList.add('show');
   }catch(e){
+    console.error(e);
     result.innerHTML = `<p class="muted">Couldn't reach the AI right now — try again in a moment.</p>`;
     result.classList.add('show');
   }
@@ -776,7 +803,7 @@ function OverviewView(){
   </div>
   <div class="two-col">
     <div class="card">
-      <div class="section-title">Welcome back, ${escapeHtml(u.name.split(' ')[0])} 👋</div>
+      <div class="section-title">Welcome back, ${escapeHtml((u.name||'').split(' ')[0]||'there')} 👋</div>
       <p class="muted" style="margin:6px 0 18px;">${escapeHtml(u.headline)}</p>
       <p style="font-size:14.5px; line-height:1.7;">${escapeHtml(u.shortIntro)}</p>
       <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
@@ -845,7 +872,7 @@ async function regenProfile(){
     useCredit();
     toast('Profile regenerated ✨');
     render();
-  }catch(e){ toast('AI request failed — try again'); }
+  }catch(e){ console.error(e); toast('AI request failed — try again'); }
 }
 
 function PortfolioView(){
@@ -928,7 +955,7 @@ async function improveProject(i){
     useCredit();
     render();
     toast('Description improved ✨');
-  }catch(e){ toast('AI request failed'); }
+  }catch(e){ console.error(e); toast('AI request failed'); }
 }
 
 function WebsiteView(){
@@ -998,7 +1025,7 @@ async function regenWebsite(){
     STATE.website.testimonial = out.testimonialPlaceholder;
     await S.set('website', STATE.website);
     useCredit(); render(); toast('Site copy refreshed');
-  }catch(e){ toast('AI request failed'); }
+  }catch(e){ console.error(e); toast('AI request failed'); }
 }
 
 function ProposalsView(){
@@ -1042,7 +1069,7 @@ async function generateProposal(){
         <button class="btn btn-primary btn-sm" onclick="saveProposal('${encodeURIComponent(text)}','${tone}')">💾 Save</button>
       </div>`;
     useCredit();
-  }catch(e){ toast('AI request failed — try again'); }
+  }catch(e){ console.error(e); toast('AI request failed — try again'); }
   btn.innerHTML='✨ Generate proposal'; btn.disabled=false;
 }
 async function saveProposal(encText, tone){
@@ -1094,7 +1121,7 @@ async function generateMessage(){
         <button class="btn btn-primary btn-sm" onclick="saveMessage('${encodeURIComponent(text)}','${type}')">💾 Save</button>
       </div>`;
     useCredit();
-  }catch(e){ toast('AI request failed'); }
+  }catch(e){ console.error(e); toast('AI request failed'); }
   btn.innerHTML='✨ Generate message'; btn.disabled=false;
 }
 async function saveMessage(encText,type){
@@ -1159,7 +1186,7 @@ async function generatePricing(){
     await S.set('pricingPkgs', out);
     document.getElementById('pricingOutput').innerHTML = renderPricingPkgs(out);
     useCredit();
-  }catch(e){ toast('AI request failed'); }
+  }catch(e){ console.error(e); toast('AI request failed'); }
   btn.innerHTML='✨ Suggest packages'; btn.disabled=false;
 }
 
@@ -1202,7 +1229,7 @@ async function generateSocial(){
         <button class="btn btn-primary btn-sm" onclick="saveSocial('${platform}','${encodeURIComponent(out.hook)}','${encodeURIComponent(out.caption)}')">💾 Save</button>
       </div>`;
     useCredit();
-  }catch(e){ toast('AI request failed'); }
+  }catch(e){ console.error(e); toast('AI request failed'); }
   btn.innerHTML='✨ Generate content'; btn.disabled=false;
 }
 async function saveSocial(platform, encHook, encCaption){
