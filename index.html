@@ -628,10 +628,20 @@ Group skills into 2-4 sensible categories based on the raw list given (e.g. "Des
     })
   });
 
-  const json = await response.json();
-  if(!response.ok){
-    throw new Error(json.error || ('AI request failed (' + response.status + ')'));
+  // Parse the body defensively first — a 500 or a proxy error page often
+  // comes back as HTML/plain text, and calling response.json() on that
+  // throws before we ever get to check response.ok.
+  let json;
+  try{
+    json = await response.json();
+  }catch(e){
+    throw new Error('AI request failed (' + response.status + ')');
   }
+
+  if(!response.ok){
+    throw new Error((json && json.error) || ('AI request failed (' + response.status + ')'));
+  }
+
   const text = (json.content || '').trim();
   const cleaned = text.replace(/^```json\s*|^```\s*|```$/gm, '').trim();
   let parsed;
@@ -650,7 +660,7 @@ function renderPortfolio(data, ai){
 
   const metaBits = [];
   if(data.location) metaBits.push(data.location);
-  if(data.years) metaBits.push(data.years + (isNaN(data.years) ? '' : ' yrs experience'));
+  if(data.years) metaBits.push(data.years);
   document.getElementById('pf-meta').innerHTML = metaBits.map(m=>`<span>${escapeHtml(m)}</span>`).join('');
 
   document.getElementById('pf-about').textContent = ai.about || data.about;
