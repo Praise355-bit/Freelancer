@@ -3,1365 +3,705 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Freelancer — Turn Your Skill Into a Business</title>
+<title>Pro Skill AI — Portfolio Intake</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --brand:#5B4FE9; --brand-2:#4038B8; --gold:#E8A33D; --gold-2:#C7842A;
-  --bg:#FAFAF8; --bg-elevated:#FFFFFF; --bg-sunken:#F1F0FA;
-  --text:#15132B; --text-muted:#66628A; --border:#E4E2F2;
-  --success:#1C9A6C; --danger:#D5473C;
-  --radius:14px; --radius-lg:22px;
-  --shadow: 0 1px 2px rgba(21,19,43,.04), 0 8px 24px -8px rgba(21,19,43,.10);
-  --font-d:'Sora',sans-serif; --font-b:'Inter',sans-serif; --font-m:'JetBrains Mono',monospace;
-}
-[data-theme="dark"]{
-  --bg:#0E0C1D; --bg-elevated:#171432; --bg-sunken:#100E22;
-  --text:#F2F1FA; --text-muted:#9B97C4; --border:#2A2650;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -10px rgba(0,0,0,.6);
-}
-*{box-sizing:border-box; margin:0; padding:0;}
-body{font-family:var(--font-b); background:var(--bg); color:var(--text); transition:background .3s,color .3s; -webkit-font-smoothing:antialiased;}
-h1,h2,h3,h4{font-family:var(--font-d); letter-spacing:-0.02em;}
-a{color:inherit; text-decoration:none;}
-button{font-family:var(--font-b); cursor:pointer;}
-::selection{background:var(--brand); color:#fff;}
-.wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 24px; border-radius:100px; border:none; font-weight:600; font-size:14.5px; transition:transform .15s, box-shadow .15s, opacity .15s; white-space:nowrap;}
-.btn:active{transform:scale(.97);}
-.btn-primary{background:var(--text); color:var(--bg);}
-[data-theme="dark"] .btn-primary{background:var(--brand); color:#fff;}
-.btn-primary:hover{opacity:.88;}
-.btn-gold{background:var(--gold); color:#241A05;}
-.btn-gold:hover{background:var(--gold-2);}
-.btn-ghost{background:transparent; color:var(--text); border:1.5px solid var(--border);}
-.btn-ghost:hover{border-color:var(--text);}
-.btn-sm{padding:9px 16px; font-size:13px; border-radius:10px;}
-.btn-block{width:100%;}
-input,textarea,select{font-family:var(--font-b); background:var(--bg-elevated); border:1.5px solid var(--border); color:var(--text); padding:12px 14px; border-radius:10px; font-size:14.5px; width:100%; transition:border-color .15s;}
-input:focus,textarea:focus,select:focus{outline:none; border-color:var(--brand);}
-label{font-size:13px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;}
-.field{margin-bottom:16px;}
-.card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow);}
-.pill{display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:100px; font-size:12px; font-weight:600; background:var(--bg-sunken); color:var(--text-muted);}
-.badge-gold{background:rgba(232,163,61,.16); color:var(--gold-2);}
-[data-theme="dark"] .badge-gold{color:var(--gold);}
-.muted{color:var(--text-muted);}
-.spinner{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin .7s linear infinite; display:inline-block;}
-.spinner-dark{border:2px solid rgba(0,0,0,.12); border-top-color:var(--brand);}
-@keyframes spin{to{transform:rotate(360deg);}}
-.skeleton{background:linear-gradient(90deg,var(--bg-sunken) 25%,var(--border) 50%,var(--bg-sunken) 75%); background-size:200% 100%; animation:shimmer 1.4s infinite; border-radius:8px;}
-@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
-.toast-host{position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:10px;}
-.toast{background:var(--text); color:var(--bg); padding:13px 18px; border-radius:10px; font-size:13.5px; font-weight:500; box-shadow:var(--shadow); animation:toastIn .25s ease;}
-@keyframes toastIn{from{opacity:0; transform:translateY(8px);}to{opacity:1; transform:translateY(0);}}
-/* NAV */
-.topnav{position:sticky; top:0; z-index:100; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);}
-.topnav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1180px; margin:0 auto;}
-.logo{display:flex; align-items:center; gap:9px; font-family:var(--font-d); font-weight:800; font-size:19px;}
-.logo-mark{width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--brand),var(--gold)); display:flex; align-items:center; justify-content:center; color:#fff; font-size:15px; font-weight:800;}
-.navlinks{display:flex; gap:30px; font-size:14.5px; font-weight:500;}
-.navlinks a:hover{color:var(--brand);}
-.navactions{display:flex; align-items:center; gap:12px;}
-.icon-btn{width:38px; height:38px; border-radius:10px; border:1.5px solid var(--border); background:var(--bg-elevated); display:flex; align-items:center; justify-content:center; color:var(--text);}
-.mobile-menu-btn{display:none;}
-@media(max-width:860px){.navlinks{display:none;} .mobile-menu-btn{display:flex;}}
+  :root{
+    --ink:#e7f6f8;
+    --ink-soft:#8fb4bb;
+    --canvas:#070f12;
+    --card:#0c171b;
+    --line:#1d8fa0;
+    --gold:#22d3ee;
+    --gold-deep:#2dd4e0;
+    --teal:#22d3ee;
+    --red:#e05c4d;
+    --white:#0f1e23;
+    --radius:2px;
+    --shadow:0 1px 0 rgba(34,211,238,.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'Poppins', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{background:var(--gold);color:var(--white);}
+  :focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 
-/* HERO */
-.hero{padding:88px 24px 60px; position:relative; overflow:hidden;}
-.hero-glow{position:absolute; top:-200px; left:50%; transform:translateX(-50%); width:900px; height:600px; background:radial-gradient(ellipse at center, color-mix(in srgb, var(--brand) 22%, transparent), transparent 70%); pointer-events:none;}
-.hero-inner{max-width:1180px; margin:0 auto; text-align:center; position:relative;}
-.eyebrow{font-family:var(--font-m); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--brand); font-weight:600; margin-bottom:18px; display:inline-flex; align-items:center; gap:8px; background:color-mix(in srgb, var(--brand) 10%, transparent); padding:7px 14px; border-radius:100px;}
-.hero h1{font-size:clamp(36px,6vw,68px); line-height:1.04; font-weight:800; max-width:920px; margin:0 auto 22px;}
-.hero h1 .grad{background:linear-gradient(100deg,var(--brand),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-.hero p.sub{font-size:clamp(16px,2vw,19px); color:var(--text-muted); max-width:600px; margin:0 auto 36px; line-height:1.55;}
-.hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:56px;}
+  .mono{font-family:'Poppins', sans-serif;}
+  .disp{font-family:'Poppins', sans-serif;}
 
-/* LIVE DEMO */
-.demo-box{max-width:720px; margin:0 auto; background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-lg); padding:8px; box-shadow:var(--shadow); text-align:left;}
-.demo-input-row{display:flex; gap:8px; padding:8px;}
-.demo-input-row input{border:none; background:var(--bg-sunken); border-radius:12px; font-size:15px; padding:14px 16px;}
-.demo-input-row input:focus{outline:2px solid var(--brand); outline-offset:-2px;}
-.demo-result{border-top:1px solid var(--border); margin-top:4px; padding:20px; display:none;}
-.demo-result.show{display:block; animation:fadeUp .35s ease;}
-@keyframes fadeUp{from{opacity:0; transform:translateY(10px);}to{opacity:1; transform:translateY(0);}}
-.demo-headline{font-family:var(--font-d); font-weight:700; font-size:20px; margin-bottom:6px;}
-.demo-tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px;}
-.tag{background:var(--bg-sunken); border-radius:100px; padding:5px 12px; font-size:12.5px; font-weight:600; color:var(--text-muted);}
+  /* ---------- shell ---------- */
+  .shell{max-width:1040px;margin:0 auto;padding:0 20px 80px;}
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:28px 0 20px;border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .brand{display:flex;align-items:baseline;gap:10px;}
+  .brand .mark{
+    font-family:'Poppins', sans-serif;font-weight:700;font-size:22px;
+    letter-spacing:.01em;color:var(--ink);
+  }
+  .brand .mark span{color:var(--gold-deep);}
+  .brand .tag{
+    font-family:'Poppins', sans-serif;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);
+  }
+  .doc-id{font-family:'Poppins', sans-serif;font-size:11px;color:var(--ink-soft);text-align:right;line-height:1.6;}
 
-/* FEATURE GRID */
-.section{padding:76px 24px;}
-.section-head{text-align:center; max-width:640px; margin:0 auto 50px;}
-.section-head .eyebrow{margin-bottom:14px;}
-.section-head h2{font-size:clamp(28px,4vw,42px); font-weight:800; margin-bottom:14px;}
-.section-head p{color:var(--text-muted); font-size:16.5px; line-height:1.55;}
-.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
-@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr;} .grid4{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.grid3{grid-template-columns:1fr;} .grid4{grid-template-columns:1fr;}}
-.feat-card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:26px; transition:transform .2s, border-color .2s;}
-.feat-card:hover{transform:translateY(-4px); border-color:var(--brand);}
-.feat-icon{width:42px; height:42px; border-radius:12px; background:var(--bg-sunken); display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:16px;}
-.feat-card h3{font-size:16.5px; margin-bottom:8px; font-weight:700;}
-.feat-card p{font-size:14px; color:var(--text-muted); line-height:1.55;}
+  /* ---------- intake layout ---------- */
+  .intake{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;}
+  @media (max-width:720px){ .intake{grid-template-columns:1fr;} }
 
-/* PRICING */
-.pricing-toggle{display:flex; justify-content:center; margin-bottom:44px;}
-.pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start;}
-@media(max-width:900px){.pricing-grid{grid-template-columns:1fr; max-width:400px; margin:0 auto;}}
-.price-card{background:var(--bg-elevated); border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:30px; position:relative;}
-.price-card.featured{border-color:var(--brand); box-shadow:0 0 0 3px color-mix(in srgb, var(--brand) 14%, transparent);}
-.price-card .badge-gold{position:absolute; top:-13px; left:50%; transform:translateX(-50%); padding:5px 16px;}
-.price-card h3{font-size:19px; margin-bottom:6px;}
-.price-card .amt{font-size:38px; font-weight:800; font-family:var(--font-d); margin:14px 0 4px;}
-.price-card .amt span{font-size:14px; font-weight:500; color:var(--text-muted);}
-.price-card ul{list-style:none; margin:22px 0 26px; display:flex; flex-direction:column; gap:11px;}
-.price-card li{font-size:14px; display:flex; gap:9px; align-items:flex-start; color:var(--text-muted);}
-.price-card li b{color:var(--text); font-weight:500;}
-.check{color:var(--success); flex-shrink:0; margin-top:1px;}
+  .rail{position:sticky;top:20px;display:flex;flex-direction:column;gap:2px;}
+  @media (max-width:720px){ .rail{position:static;flex-direction:row;overflow-x:auto;gap:0;border-bottom:1px solid var(--line);} }
+  .rail button{
+    all:unset;cursor:pointer;
+    display:flex;align-items:center;gap:10px;
+    padding:12px 10px;font-family:'Poppins', sans-serif;font-size:12px;
+    color:var(--ink-soft);border-left:2px solid transparent;white-space:nowrap;
+  }
+  @media (max-width:720px){ .rail button{border-left:none;border-bottom:2px solid transparent;} }
+  .rail button .n{color:var(--line);font-weight:600;}
+  .rail button.active{color:var(--ink);border-left-color:var(--gold-deep);background:rgba(34,211,238,.09);}
+  @media (max-width:720px){ .rail button.active{border-bottom-color:var(--gold-deep);} }
+  .rail button.active .n{color:var(--gold-deep);}
+  .rail button.done .n::after{content:"✓";margin-left:5px;color:var(--teal);}
 
-footer{border-top:1px solid var(--border); padding:40px 24px; text-align:center; color:var(--text-muted); font-size:13.5px;}
+  .panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:32px;
+    background-image:repeating-linear-gradient(transparent,transparent 27px,rgba(34,211,238,.05) 28px);
+    background-position: 0 4px;
+  }
+  .section{display:none;}
+  .section.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 
-/* AUTH / ONBOARDING */
-.center-screen{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 20px;}
-.auth-card{width:100%; max-width:460px;}
-.onboard-shell{min-height:100vh; padding:32px 20px 60px;}
-.onboard-head{max-width:640px; margin:0 auto 30px; text-align:center;}
-.progress-track{max-width:640px; margin:0 auto 36px; height:5px; background:var(--bg-sunken); border-radius:100px; overflow:hidden;}
-.progress-bar{height:100%; background:linear-gradient(90deg,var(--brand),var(--gold)); border-radius:100px; transition:width .4s ease;}
-.onboard-card{max-width:640px; margin:0 auto;}
-.step-label{font-size:12.5px; font-weight:700; color:var(--brand); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;}
-.row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-@media(max-width:560px){.row2{grid-template-columns:1fr;}}
-.chip-select{display:flex; flex-wrap:wrap; gap:8px;}
-.chip{padding:10px 16px; border-radius:100px; border:1.5px solid var(--border); font-size:13.5px; font-weight:600; background:var(--bg-elevated); color:var(--text-muted); transition:all .15s;}
-.chip.active{background:var(--text); color:var(--bg); border-color:var(--text);}
-[data-theme="dark"] .chip.active{background:var(--brand); border-color:var(--brand); color:#fff;}
-.nav-buttons{display:flex; justify-content:space-between; margin-top:28px; gap:10px;}
-.upload-box{border:1.5px dashed var(--border); border-radius:14px; padding:26px; text-align:center; color:var(--text-muted); font-size:13.5px; cursor:pointer;}
-.upload-box:hover{border-color:var(--brand);}
+  .section h2{
+    font-family:'Poppins', sans-serif;font-size:20px;margin:0 0 4px;
+  }
+  .section .sub{font-family:'Poppins', sans-serif;font-size:11.5px;color:var(--ink-soft);margin:0 0 24px;}
 
-/* APP SHELL */
-.app-shell{display:flex; min-height:100vh;}
-.sidebar{width:250px; flex-shrink:0; border-right:1px solid var(--border); background:var(--bg-elevated); padding:20px 14px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto;}
-.sidebar-logo{padding:8px 10px 20px;}
-.side-link{display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:10px; font-size:14px; font-weight:600; color:var(--text-muted); margin-bottom:2px;}
-.side-link .ic{width:18px; text-align:center;}
-.side-link:hover{background:var(--bg-sunken); color:var(--text);}
-.side-link.active{background:var(--text); color:var(--bg);}
-[data-theme="dark"] .side-link.active{background:var(--brand); color:#fff;}
-.side-section-label{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-muted); padding:16px 12px 6px;}
-.side-foot{margin-top:auto; padding-top:14px; border-top:1px solid var(--border);}
-.usage-box{background:var(--bg-sunken); border-radius:12px; padding:14px; margin:10px 4px;}
-.usage-bar-track{height:6px; background:var(--border); border-radius:100px; overflow:hidden; margin-top:8px;}
-.usage-bar{height:100%; background:linear-gradient(90deg,var(--brand),var(--gold));}
-.main{flex:1; min-width:0;}
-.topbar{position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 28px; border-bottom:1px solid var(--border); background:color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter:blur(8px);}
-.content{padding:28px;}
-@media(max-width:900px){.sidebar{position:fixed; left:-260px; z-index:200; transition:left .25s; box-shadow:var(--shadow);} .sidebar.open{left:0;} .content{padding:18px;}}
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;font-family:'Poppins', sans-serif;font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;
+  }
+  .field label .opt{text-transform:none;letter-spacing:0;color:#5f8790;}
+  .field input, .field textarea, .field select{
+    width:100%;border:none;border-bottom:1.5px solid var(--line);
+    background:transparent;font-family:'Poppins', sans-serif;font-size:16px;color:var(--ink);
+    padding:6px 2px;resize:vertical;
+  }
+  .field select{
+    appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:linear-gradient(45deg, transparent 50%, var(--gold-deep) 50%), linear-gradient(135deg, var(--gold-deep) 50%, transparent 50%);
+    background-position: calc(100% - 14px) 14px, calc(100% - 8px) 14px;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat:no-repeat;
+  }
+  .field select option{ background:var(--card); color:var(--ink); }
+  .field textarea{min-height:88px;line-height:1.6;}
+  .field input:focus, .field textarea:focus{border-bottom-color:var(--gold-deep);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:520px){ .row2{grid-template-columns:1fr;} }
 
-.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;}
-@media(max-width:900px){.stat-grid{grid-template-columns:1fr 1fr;}}
-.stat-card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:20px;}
-.stat-card .num{font-family:var(--font-d); font-size:26px; font-weight:800; margin-top:6px;}
-.two-col{display:grid; grid-template-columns:1.3fr 1fr; gap:20px;}
-@media(max-width:960px){.two-col{grid-template-columns:1fr;}}
-.section-title{font-size:22px; font-weight:800; font-family:var(--font-d); margin-bottom:4px;}
-.tab-row{display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap;}
-.gen-output{background:var(--bg-sunken); border-radius:14px; padding:20px; margin-top:16px; font-size:14.5px; line-height:1.7; white-space:pre-wrap;}
-.copy-row{display:flex; gap:8px; margin-top:12px;}
-.list-item{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border:1px solid var(--border); border-radius:12px; margin-bottom:10px; background:var(--bg-elevated);}
-.avatar{width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--gold)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;}
-.editable{border:1.5px dashed transparent; border-radius:8px; padding:4px 6px; transition:border-color .15s;}
-.editable:hover{border-color:var(--border);}
-.editable:focus{outline:none; border-color:var(--brand); background:var(--bg-sunken);}
-table{width:100%; border-collapse:collapse; font-size:14px;}
-th{text-align:left; padding:10px 12px; color:var(--text-muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid var(--border);}
-td{padding:12px; border-bottom:1px solid var(--border);}
-.modal-bg{position:fixed; inset:0; background:rgba(10,8,25,.5); display:flex; align-items:center; justify-content:center; z-index:500; padding:20px;}
-.modal{background:var(--bg-elevated); border-radius:var(--radius-lg); padding:28px; max-width:480px; width:100%; box-shadow:var(--shadow);}
-.hidden{display:none !important;}
+  .proj{
+    border:1px solid var(--line);background:var(--white);padding:18px;margin-bottom:14px;position:relative;
+  }
+  .proj .rm{
+    position:absolute;top:10px;right:10px;all:unset;cursor:pointer;
+    font-family:'Poppins', sans-serif;font-size:11px;color:var(--red);
+  }
+  .add-btn, .ghost-btn{
+    all:unset;cursor:pointer;font-family:'Poppins', sans-serif;font-size:12px;
+    color:var(--teal);border:1px dashed var(--teal);padding:8px 14px;display:inline-block;
+  }
+  .add-btn:hover, .ghost-btn:hover{background:rgba(34,211,238,.08);}
+
+  .socials-list{display:flex;flex-direction:column;gap:10px;}
+  .social-row{display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:center;}
+  @media (max-width:520px){ .social-row{grid-template-columns:1fr;} }
+
+  .nav-controls{display:flex;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid var(--line);}
+  .step-btn{
+    all:unset;cursor:pointer;font-family:'Poppins', sans-serif;font-weight:600;font-size:13px;
+    padding:10px 18px;letter-spacing:.02em;
+  }
+  .step-btn.primary{background:var(--ink);color:var(--white);}
+  .step-btn.primary:hover{background:var(--gold-deep);}
+  .step-btn.secondary{color:var(--ink-soft);}
+
+  .compile-bar{margin-top:24px;text-align:center;}
+  .compile-btn{
+    all:unset;cursor:pointer;font-family:'Poppins', sans-serif;font-weight:700;font-size:16px;
+    background:var(--gold-deep);color:var(--white);padding:16px 34px;letter-spacing:.02em;
+    box-shadow:var(--shadow);
+  }
+  .compile-btn:hover{background:#0aa8c2;}
+  .compile-btn:disabled{opacity:.5;cursor:default;}
+  .compile-hint{font-family:'Poppins', sans-serif;font-size:11px;color:var(--ink-soft);margin-top:10px;}
+
+  .error-box{
+    margin-top:16px;border:1px solid var(--red);background:rgba(224,92,77,.1);color:var(--red);
+    font-family:'Poppins', sans-serif;font-size:12px;padding:12px 14px;
+  }
+
+  /* ---------- loading ---------- */
+  .loading-screen{
+    display:none;min-height:60vh;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;
+  }
+  .loading-screen.active{display:flex;}
+  .stamp-ring{
+    width:96px;height:96px;border:3px solid var(--line);border-top-color:var(--gold-deep);
+    border-radius:50%;animation:spin 1s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-line{font-family:'Poppins', sans-serif;font-size:12px;color:var(--ink-soft);letter-spacing:.05em;}
+
+  /* ---------- portfolio ---------- */
+  #portfolio{display:none;}
+  #portfolio.active{display:block;}
+  .compiled-stamp{
+    position:relative;display:inline-block;border:2px solid var(--red);color:var(--red);
+    font-family:'Poppins', sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    padding:6px 12px;transform:rotate(-3deg);opacity:0;animation:stamp-in .4s .1s ease forwards;
+  }
+  @keyframes stamp-in{from{opacity:0;transform:rotate(-3deg) scale(1.8);}to{opacity:1;transform:rotate(-3deg) scale(1);}}
+
+  .pf-header{display:flex;justify-content:space-between;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--line);margin-bottom:0;}
+  .pf-toolbar{display:flex;gap:10px;}
+
+  .pf-hero{padding:64px 0 48px;border-bottom:1px solid var(--line);}
+  .pf-hero .eyebrow{font-family:'Poppins', sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px;}
+  .pf-hero h1{font-family:'Poppins', sans-serif;font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 16px;font-weight:700;}
+  .pf-hero .tagline{font-family:'Poppins', sans-serif;font-style:italic;font-size:20px;color:var(--ink-soft);max-width:640px;line-height:1.5;margin:0;}
+  .pf-meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-family:'Poppins', sans-serif;font-size:12px;color:var(--ink-soft);}
+
+  .pf-section{padding:48px 0;border-bottom:1px solid var(--line);}
+  .pf-section .label{font-family:'Poppins', sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:18px;}
+  .pf-about p{font-size:18px;line-height:1.75;max-width:720px;color:var(--ink);}
+
+  .skill-groups{display:flex;flex-direction:column;gap:18px;}
+  .skill-group .g-name{font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:8px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:'Poppins', sans-serif;font-size:12px;border:1px solid var(--line);
+    padding:6px 12px;background:var(--card);
+  }
+
+  .projects{display:flex;flex-direction:column;}
+  .pcard{padding:28px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:60px 1fr;gap:20px;}
+  .pcard:first-child{border-top:none;}
+  .pcard .idx{font-family:'Poppins', sans-serif;color:var(--line);font-size:13px;padding-top:4px;}
+  .pcard h3{font-family:'Poppins', sans-serif;font-size:21px;margin:0 0 8px;}
+  .pcard p{font-size:16px;line-height:1.7;color:var(--ink-soft);margin:0 0 10px;max-width:640px;}
+  .pcard .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+  .pcard .ptags span{font-family:'Poppins', sans-serif;font-size:11px;color:var(--teal);}
+  .pcard a.plink{font-family:'Poppins', sans-serif;font-size:12px;color:var(--ink);border-bottom:1px solid var(--gold-deep);text-decoration:none;}
+
+  .pf-closing{padding:56px 0 40px;}
+  .pf-closing p{font-family:'Poppins',sans-serif;font-style:italic;font-size:22px;line-height:1.6;max-width:680px;color:var(--ink);}
+
+  footer.pf-footer{padding:32px 0 60px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+  .contact-links{display:flex;flex-direction:column;gap:6px;}
+  .contact-links a{font-family:'Poppins', sans-serif;font-size:13px;color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;}
+  .contact-links a:hover{border-bottom-color:var(--gold-deep);}
+  .compiled-at{font-family:'Poppins', sans-serif;font-size:11px;color:var(--ink-soft);text-align:right;}
+
+  @media print{
+    .pf-toolbar{display:none;}
+  }
 </style>
 </head>
 <body>
-<div id="app"></div>
-<div class="toast-host" id="toastHost"></div>
+<div class="shell" id="app">
+
+  <header class="top">
+    <div class="brand">
+      <div class="mark">PRO SKILL<span>AI</span></div>
+      <div class="tag">Portfolio Intake</div>
+    </div>
+    <div class="doc-id mono" id="docId">FORM 01 / DRAFT<br>STATUS: OPEN</div>
+  </header>
+
+  <!-- ============ INTAKE ============ -->
+  <div id="intake">
+    <div class="intake">
+      <nav class="rail" id="rail">
+        <button class="tab active" data-step="0"><span class="n">01</span> Identity</button>
+        <button class="tab" data-step="1"><span class="n">02</span> Craft</button>
+        <button class="tab" data-step="2"><span class="n">03</span> Work</button>
+        <button class="tab" data-step="3"><span class="n">04</span> Contact</button>
+      </nav>
+
+      <div class="panel">
+        <!-- STEP 0: IDENTITY -->
+        <section class="section active" data-section="0">
+          <h2>Identity</h2>
+          <p class="sub">The basics — who you are and what you do.</p>
+          <div class="row2">
+            <div class="field">
+              <label>Full name</label>
+              <input type="text" id="f-name" placeholder="Amara Chen">
+            </div>
+            <div class="field">
+              <label>Role / title</label>
+              <select id="f-title" onchange="toggleOther('f-title', 'f-title-other-wrap')">
+                <option value="" selected disabled>Choose the closest fit…</option>
+                <option>Graphic / Brand Designer</option>
+                <option>UI/UX Designer</option>
+                <option>Web Developer</option>
+                <option>Software Engineer</option>
+                <option>Copywriter / Content Writer</option>
+                <option>Illustrator</option>
+                <option>Photographer</option>
+                <option>Videographer / Video Editor</option>
+                <option>Marketing Consultant</option>
+                <option>Social Media Manager</option>
+                <option>Voice Over Artist</option>
+                <option>Translator</option>
+                <option>Virtual Assistant</option>
+                <option value="other">Other — let me type it</option>
+              </select>
+              <div class="field-other" id="f-title-other-wrap" style="display:none;margin-top:10px;">
+                <input type="text" id="f-title-other" placeholder="Your role or title">
+              </div>
+            </div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label>Location <span class="opt">(optional)</span></label>
+              <select id="f-location" onchange="toggleOther('f-location', 'f-location-other-wrap')">
+                <option value="" selected>Prefer not to say</option>
+                <option>Remote — worldwide</option>
+                <option value="other">Remote / based in a specific place — let me type it</option>
+                <option>Hybrid</option>
+                <option>On-site / local clients only</option>
+              </select>
+              <div class="field-other" id="f-location-other-wrap" style="display:none;margin-top:10px;">
+                <input type="text" id="f-location-other" placeholder="City, Country">
+              </div>
+            </div>
+            <div class="field">
+              <label>Years working <span class="opt">(optional)</span></label>
+              <select id="f-years">
+                <option value="" selected>Prefer not to say</option>
+                <option>Less than 1 year</option>
+                <option>1–2 years</option>
+                <option>3–5 years</option>
+                <option>6–10 years</option>
+                <option>10+ years</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Tagline <span class="opt">(pick a tone, or write your own)</span></label>
+            <select id="f-tagline-style" onchange="toggleOther('f-tagline-style', 'f-tagline-other-wrap', 'custom')">
+              <option value="ai" selected>Let AI decide the tone</option>
+              <option value="Bold and confident">Bold & confident</option>
+              <option value="Warm and approachable">Warm & approachable</option>
+              <option value="Minimal and to the point">Minimal & to the point</option>
+              <option value="Playful and witty">Playful / witty</option>
+              <option value="custom">Write my own — let me type it</option>
+            </select>
+            <div class="field-other" id="f-tagline-other-wrap" style="display:none;margin-top:10px;">
+              <input type="text" id="f-tagline" placeholder="e.g. I make complicated things feel obvious.">
+            </div>
+          </div>
+          <div class="nav-controls">
+            <span></span>
+            <button class="step-btn primary" onclick="goStep(1)">Next: Craft →</button>
+          </div>
+        </section>
+
+        <!-- STEP 1: CRAFT -->
+        <section class="section" data-section="1">
+          <h2>Craft</h2>
+          <p class="sub">Rough notes are fine — the AI will turn this into polished copy.</p>
+          <div class="field">
+            <label>Tell us about your work — background, what you love working on, how you got here</label>
+            <textarea id="f-about" placeholder="I started out doing freelance illustration in college, moved into UI work around 2019... I care most about accessibility and getting the small details right..."></textarea>
+          </div>
+          <div class="field">
+            <label>Skills <span class="opt">(comma-separated)</span></label>
+            <input type="text" id="f-skills" placeholder="Figma, Design systems, React, User research, Illustration">
+          </div>
+          <div class="field">
+            <label>Tools / stack <span class="opt">(comma-separated, optional)</span></label>
+            <input type="text" id="f-tools" placeholder="Figma, Notion, Webflow, ChatGPT">
+          </div>
+          <div class="nav-controls">
+            <button class="step-btn secondary" onclick="goStep(0)">← Back</button>
+            <button class="step-btn primary" onclick="goStep(2)">Next: Work →</button>
+          </div>
+        </section>
+
+        <!-- STEP 2: WORK -->
+        <section class="section" data-section="2">
+          <h2>Work</h2>
+          <p class="sub">Add a few projects. Messy notes are fine — describe what it was and what you did.</p>
+          <div id="projects"></div>
+          <button class="add-btn" onclick="addProject()">+ Add project</button>
+          <div class="nav-controls">
+            <button class="step-btn secondary" onclick="goStep(1)">← Back</button>
+            <button class="step-btn primary" onclick="goStep(3)">Next: Contact →</button>
+          </div>
+        </section>
+
+        <!-- STEP 3: CONTACT -->
+        <section class="section" data-section="3">
+          <h2>Contact</h2>
+          <p class="sub">How people reach you.</p>
+          <div class="row2">
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="f-email" placeholder="amara@studio.co">
+            </div>
+            <div class="field">
+              <label>Phone <span class="opt">(optional)</span></label>
+              <input type="text" id="f-phone" placeholder="">
+            </div>
+          </div>
+          <div class="field">
+            <label>Links <span class="opt">(website, LinkedIn, Dribbble, GitHub, etc.)</span></label>
+            <div class="socials-list" id="socials"></div>
+            <div style="margin-top:10px;">
+              <button class="add-btn" onclick="addSocial()">+ Add link</button>
+            </div>
+          </div>
+          <div class="nav-controls">
+            <button class="step-btn secondary" onclick="goStep(2)">← Back</button>
+            <span></span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="compile-bar">
+      <button class="compile-btn" id="compileBtn" onclick="compile()">Compile Portfolio →</button>
+      <div class="compile-hint">AI drafts your bio, project write-ups and skill groupings from what you enter above</div>
+      <div id="errorBox"></div>
+    </div>
+  </div>
+
+  <!-- ============ LOADING ============ -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="stamp-ring"></div>
+    <div class="loading-line" id="loadingLine">READING INTAKE FORM…</div>
+  </div>
+
+  <!-- ============ PORTFOLIO ============ -->
+  <div id="portfolio">
+    <div class="pf-header">
+      <div class="compiled-stamp">Portfolio Compiled</div>
+      <div class="pf-toolbar">
+        <button class="ghost-btn" onclick="backToEdit()">← Edit details</button>
+        <button class="ghost-btn" onclick="compile()">Regenerate</button>
+        <button class="ghost-btn" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+
+    <section class="pf-hero">
+      <div class="eyebrow" id="pf-role"></div>
+      <h1 id="pf-name"></h1>
+      <p class="tagline" id="pf-tagline"></p>
+      <div class="pf-meta" id="pf-meta"></div>
+    </section>
+
+    <section class="pf-section pf-about">
+      <div class="label">About</div>
+      <p id="pf-about"></p>
+    </section>
+
+    <section class="pf-section">
+      <div class="label">Skills</div>
+      <div class="skill-groups" id="pf-skills"></div>
+    </section>
+
+    <section class="pf-section">
+      <div class="label">Selected Work</div>
+      <div class="projects" id="pf-projects"></div>
+    </section>
+
+    <section class="pf-closing" id="pf-closing-wrap">
+      <p id="pf-closing"></p>
+    </section>
+
+    <footer class="pf-footer">
+      <div class="contact-links" id="pf-contacts"></div>
+      <div class="compiled-at" id="pf-compiledAt"></div>
+    </footer>
+  </div>
+
+</div>
 
 <script>
-/* ============ STORAGE ============ */
-const S = {
-  async get(key, fallback){
-    try{ const r = await window.storage.get(key); return r ? JSON.parse(r.value) : fallback; }
-    catch(e){ return fallback; }
-  },
-  async set(key, val){
-    try{ await window.storage.set(key, JSON.stringify(val)); }catch(e){ console.error('storage set failed', e); }
-  }
-};
+let projectCount = 0;
+let socialCount = 0;
 
-/* ============ TOAST ============ */
-function toast(msg){
-  const host = document.getElementById('toastHost');
-  const el = document.createElement('div');
-  el.className='toast'; el.textContent=msg;
-  host.appendChild(el);
-  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 2600);
+function addProject(data){
+  projectCount++;
+  const id = projectCount;
+  const wrap = document.createElement('div');
+  wrap.className = 'proj';
+  wrap.dataset.id = id;
+  wrap.innerHTML = `
+    <button class="rm" onclick="this.parentElement.remove()">remove</button>
+    <div class="field">
+      <label>Project title</label>
+      <input type="text" class="p-title" placeholder="Northwind rebrand">
+    </div>
+    <div class="field">
+      <label>Notes — what it was, your role, the outcome</label>
+      <textarea class="p-desc" placeholder="Full brand refresh for a logistics startup. I led visual identity and built their design system. Rolled out across web, app and print in 6 weeks."></textarea>
+    </div>
+    <div class="field">
+      <label>Link <span class="opt">(optional)</span></label>
+      <input type="text" class="p-link" placeholder="https://...">
+    </div>
+  `;
+  document.getElementById('projects').appendChild(wrap);
 }
 
-/* ============ AI ============
-   Single entry point every feature in this app calls. Talks directly to the
-   Anthropic Messages API. expectJSON=true means the caller wants a parsed
-   object/array back (the system prompt should ask the model for JSON only).
-*/
-async function askAI(userMessage, systemPrompt, expectJSON = false){
-  const jsonInstruction = expectJSON
-    ? '\n\nRespond with ONLY valid JSON — no markdown code fences, no preamble, no trailing commentary. Just the raw JSON object or array.'
-    : '';
-  const combinedPrompt = `${systemPrompt || ''}${jsonInstruction}\n\n${userMessage}`.trim();
-
-  let resp;
-  try{
-    resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: combinedPrompt }]
-      })
-    });
-  }catch(err){
-    throw new Error('Network error reaching the AI — please check your connection.');
-  }
-
-  const data = await resp.json().catch(()=>({}));
-  if(!resp.ok){
-    throw new Error(data.error?.message || `AI request failed (${resp.status})`);
-  }
-
-  const text = (data.content || [])
-    .map(block => block.type === 'text' ? block.text : '')
-    .join('')
-    .trim();
-
-  if(!expectJSON) return text;
-
-  let cleaned = text.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/```\s*$/, '').trim();
-  try{
-    return JSON.parse(cleaned);
-  }catch(e){
-    const match = cleaned.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-    if(match){
-      try{ return JSON.parse(match[0]); }catch(e2){ /* fall through */ }
-    }
-    throw new Error('The AI response wasn\'t valid JSON — please try again.');
-  }
+function addSocial(label, url){
+  socialCount++;
+  const row = document.createElement('div');
+  row.className = 'social-row';
+  row.innerHTML = `
+    <input type="text" class="s-label" placeholder="Website / LinkedIn / Dribbble">
+    <input type="text" class="s-url" placeholder="https://...">
+    <button class="rm" onclick="this.parentElement.remove()" style="position:static;">remove</button>
+  `;
+  document.getElementById('socials').appendChild(row);
 }
 
-/* ============ STATE ============ */
-let STATE = {
-  theme: 'light',
-  user: null,          // profile object
-  portfolio: [],        // array of projects
-  website: null,
-  proposals: [],
-  messages: [],
-  pricingPkgs: null,
-  social: [],
-  plan: 'free',
-  usage: { used: 3, limit: 10 },
-  onboardStep: 0,
-  onboardData: {}
-};
+// seed with two blank projects and one blank link
+addProject(); addProject();
+addSocial();
 
-async function loadState(){
-  STATE.theme = await S.get('theme','light');
-  STATE.user = await S.get('user', null);
-  STATE.portfolio = await S.get('portfolio', []);
-  STATE.website = await S.get('website', null);
-  STATE.proposals = await S.get('proposals', []);
-  STATE.messages = await S.get('messages', []);
-  STATE.pricingPkgs = await S.get('pricingPkgs', null);
-  STATE.social = await S.get('social', []);
-  STATE.plan = await S.get('plan','free');
-  STATE.usage = await S.get('usage', {used:3, limit:10});
-  document.documentElement.setAttribute('data-theme', STATE.theme);
+// ---- tab / step navigation ----
+function goStep(n){
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', +s.dataset.section === n));
+  document.querySelectorAll('.rail .tab').forEach(t=>t.classList.toggle('active', +t.dataset.step === n));
+  window.scrollTo({top: document.querySelector('.intake').offsetTop - 20, behavior:'smooth'});
 }
-function toggleTheme(){
-  STATE.theme = STATE.theme==='light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', STATE.theme);
-  S.set('theme', STATE.theme);
+document.querySelectorAll('.rail .tab').forEach(t=>{
+  t.addEventListener('click', ()=> goStep(+t.dataset.step));
+});
+
+function toggleOther(selectId, wrapId, triggerValue){
+  const sel = document.getElementById(selectId);
+  const wrap = document.getElementById(wrapId);
+  const trigger = triggerValue || 'other';
+  wrap.style.display = (sel.value === trigger) ? 'block' : 'none';
 }
 
-function useCredit(){
-  STATE.usage.used++;
-  S.set('usage', STATE.usage);
+function val(id){ return document.getElementById(id).value.trim(); }
+
+function collectData(){
+  const projects = [...document.querySelectorAll('#projects .proj')].map(p=>({
+    title: p.querySelector('.p-title').value.trim(),
+    notes: p.querySelector('.p-desc').value.trim(),
+    link: p.querySelector('.p-link').value.trim()
+  })).filter(p=>p.title || p.notes);
+
+  const socials = [...document.querySelectorAll('#socials .social-row')].map(s=>({
+    label: s.querySelector('.s-label').value.trim(),
+    url: s.querySelector('.s-url').value.trim()
+  })).filter(s=>s.label && s.url);
+
+  const title = val('f-title') === 'other' ? val('f-title-other') : val('f-title');
+  const location = val('f-location') === 'other' ? val('f-location-other') : val('f-location');
+  const years = val('f-years');
+  const taglineStyle = val('f-tagline-style');
+  const tagline = taglineStyle === 'custom' ? val('f-tagline') : '';
+  const taglineTone = (taglineStyle && taglineStyle !== 'ai' && taglineStyle !== 'custom') ? taglineStyle : '';
+
+  return {
+    name: val('f-name'),
+    title, location, years, tagline, taglineTone,
+    about: val('f-about'),
+    skills: val('f-skills'),
+    tools: val('f-tools'),
+    email: val('f-email'),
+    phone: val('f-phone'),
+    projects, socials
+  };
 }
-function creditsLeft(){ return Math.max(0, STATE.usage.limit - STATE.usage.used); }
 
-/* ============ ROUTER ============ */
-function go(route){ location.hash = route; }
-window.addEventListener('hashchange', render);
-window.addEventListener('DOMContentLoaded', async ()=>{ await loadState(); render(); });
+function showError(msg){
+  const box = document.getElementById('errorBox');
+  box.innerHTML = msg ? `<div class="error-box">${msg}</div>` : '';
+}
 
-function render(){
-  const hash = location.hash.replace('#/','') || 'home';
-  const app = document.getElementById('app');
-  window.scrollTo(0,0);
-  if(hash==='home') return app.innerHTML = HomePage();
-  if(hash==='onboarding') return app.innerHTML = OnboardingPage();
-  if(hash==='pricing') return app.innerHTML = StandalonePricingPage();
-  if(hash==='admin') return app.innerHTML = AdminPage();
-  if(hash.startsWith('dashboard')){
-    if(!STATE.user){ go('/onboarding'); return; }
-    const sub = hash.split('/')[1] || 'overview';
-    app.innerHTML = DashboardShell(sub);
-    afterDashboardRender(sub);
+async function compile(){
+  const data = collectData();
+  showError('');
+
+  if(!data.name || !data.title){
+    showError('At least your name and role are needed before compiling — check the Identity step.');
+    goStep(0);
     return;
   }
-  app.innerHTML = HomePage();
-}
+  if(!data.about && data.projects.length === 0){
+    showError('Add a bit of background in Craft, or at least one project in Work, so there is something to write from.');
+    goStep(1);
+    return;
+  }
 
-/* ============ ICONS (inline SVG-free, emoji-based for simplicity) ============ */
-const ICONS = {
-  overview:'▦', profile:'◍', portfolio:'▣', website:'◈', proposals:'✎', messages:'✉',
-  pricing:'฿', social:'✳', subscription:'★', settings:'⚙', logout:'⏻', admin:'⛨'
-};
+  document.getElementById('intake').style.display = 'none';
+  document.getElementById('portfolio').classList.remove('active');
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.classList.add('active');
+  const lines = ['READING INTAKE FORM…','DRAFTING BIO…','GROUPING SKILLS…','WRITING PROJECT NOTES…','LAYING OUT PAGE…'];
+  let li = 0;
+  const loadingLine = document.getElementById('loadingLine');
+  const interval = setInterval(()=>{ li=(li+1)%lines.length; loadingLine.textContent = lines[li]; }, 1300);
 
-/* ============ NAV BAR (marketing) ============ */
-function TopNav(){
-  return `
-  <div class="topnav">
-    <div class="topnav-inner">
-      <a href="#/" class="logo"><span class="logo-mark">AF</span> AI Freelancer</a>
-      <nav class="navlinks">
-        <a href="#/" onclick="setTimeout(()=>document.getElementById('features')?.scrollIntoView({behavior:'smooth'}),50)">Features</a>
-        <a href="#/pricing">Pricing</a>
-        <a href="#/" onclick="setTimeout(()=>document.getElementById('howitworks')?.scrollIntoView({behavior:'smooth'}),50)">How it works</a>
-      </nav>
-      <div class="navactions">
-        <button class="icon-btn" onclick="toggleTheme(); render();" title="Toggle theme">${STATE.theme==='light'?'☾':'☀'}</button>
-        <a href="#/dashboard" class="btn btn-ghost btn-sm">Log in</a>
-        <a href="#/onboarding" class="btn btn-primary btn-sm">Start for Free</a>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ============ HOME PAGE ============ */
-function HomePage(){
-  return `
-  ${TopNav()}
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-inner">
-      <div class="eyebrow">● Built for African freelancers, powered by AI</div>
-      <h1>Turn Your Skill Into <span class="grad">a Business</span> With AI.</h1>
-      <p class="sub">Create your freelancer brand, portfolio, website and client proposals in minutes — not weeks.</p>
-      <div class="hero-actions">
-        <a href="#/onboarding" class="btn btn-primary">Start for Free →</a>
-        <a href="#features" class="btn btn-ghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Explore Features</a>
-      </div>
-      <div class="demo-box">
-        <div class="demo-input-row">
-          <input id="demoSkillInput" placeholder="I'm a video editor who creates TikTok, YouTube and football videos." value=""/>
-          <button class="btn btn-gold" style="border-radius:12px;" onclick="runHeroDemo()" id="demoBtn">Try it</button>
-        </div>
-        <div class="demo-result" id="demoResult"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="howitworks">
-    <div class="section-head">
-      <div class="eyebrow" style="display:inline-block;">How it works</div>
-      <h2>One sentence in. A full brand out.</h2>
-      <p>Describe what you do. AI Freelancer builds the rest of your business around it.</p>
-    </div>
-    <div class="grid4">
-      ${['Describe your skill','AI builds your profile & site','Package your services','Send proposals that win'].map((t,i)=>`
-        <div class="feat-card">
-          <div class="feat-icon">${i+1}</div>
-          <h3>${t}</h3>
-          <p>${['Tell us your niche, experience and who you serve.','Headline, bio, portfolio and a live website — generated instantly.','AI suggests packages and pricing tuned to your market.','Paste any job post, get a tailored proposal in seconds.'][i]}</p>
-        </div>`).join('')}
-    </div>
-  </section>
-
-  <section class="section" id="features" style="background:var(--bg-sunken); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
-    <div class="section-head">
-      <div class="eyebrow" style="display:inline-block;">Everything you need</div>
-      <h2>Your whole freelance business, run by AI</h2>
-      <p>From your first profile to your hundredth client message.</p>
-    </div>
-    <div class="grid3">
-      ${[
-        ['◍','AI Freelancer Profile','A professional headline, bio and services generated from your skill — fully editable.'],
-        ['▣','AI Portfolio Builder','Add your projects and let AI sharpen the descriptions and results.'],
-        ['◈','AI Website Builder','A complete personal website — home, services, pricing, testimonials, contact — ready to share.'],
-        ['✎','AI Proposal Generator','Paste a job description, get a personalized proposal in Professional, Friendly, Short or Premium tone.'],
-        ['✉','Client Message Generator','First contact, follow-ups, negotiation, confirmations — never write from scratch again.'],
-        ['฿','AI Pricing Assistant','Get package suggestions based on your skill, experience and project scope.'],
-      ].map(([ic,t,d])=>`
-        <div class="feat-card">
-          <div class="feat-icon">${ic}</div>
-          <h3>${t}</h3>
-          <p>${d}</p>
-        </div>`).join('')}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <div class="eyebrow" style="display:inline-block;">Pricing</div>
-      <h2>Start free. Upgrade when you're earning.</h2>
-    </div>
-    ${PricingCards()}
-  </section>
-
-  <footer>
-    <div class="wrap">
-      <div class="logo" style="justify-content:center; margin-bottom:10px;"><span class="logo-mark">AF</span> AI Freelancer</div>
-      <p>© 2026 AI Freelancer. Built for freelancers turning skills into businesses.</p>
-    </div>
-  </footer>
-  `;
-}
-
-function PricingCards(){
-  const plans = [
-    {name:'Free', price:'₦0', period:'forever', feats:['Freelancer profile','Limited AI generations','Basic portfolio (3 projects)','Basic website with AI Freelancer branding'], cta:'Start for Free', style:''},
-    {name:'Pro', price:'₦8,500', period:'/month', feats:['More AI generations (150/mo)','Unlimited proposals','Advanced portfolio','Custom website design','Branding removed','Custom domain support'], cta:'Go Pro', style:'featured', badge:'Most Popular'},
-    {name:'Business', price:'₦22,000', period:'/month', feats:['Higher AI limits (500/mo)','Multiple websites','Advanced analytics','Premium templates','Priority feature access'], cta:'Go Business', style:''}
-  ];
-  return `<div class="pricing-grid">
-    ${plans.map(p=>`
-      <div class="price-card ${p.style}">
-        ${p.badge?`<div class="pill badge-gold">${p.badge}</div>`:''}
-        <h3>${p.name}</h3>
-        <div class="amt">${p.price} <span>${p.period}</span></div>
-        <ul>${p.feats.map(f=>`<li><span class="check">✓</span> ${f}</li>`).join('')}</ul>
-        <a href="#/onboarding" class="btn ${p.style==='featured'?'btn-primary':'btn-ghost'} btn-block">${p.cta}</a>
-      </div>`).join('')}
-  </div>`;
-}
-
-function StandalonePricingPage(){
-  return `${TopNav()}<section class="section" style="padding-top:60px;">
-    <div class="section-head"><div class="eyebrow" style="display:inline-block;">Pricing</div><h2>Plans for every stage of your freelance career</h2><p>Simple pricing. Cancel anytime. Billed in Naira.</p></div>
-    ${PricingCards()}
-    <div style="max-width:640px;margin:60px auto 0;text-align:center;" class="muted">
-      <p>Payments are processed securely via Stripe Checkout. We never see or store your card details. Manage or cancel your subscription anytime from the Stripe Customer Portal inside Settings.</p>
-    </div>
-  </section><footer>© 2026 AI Freelancer</footer>`;
-}
-
-async function runHeroDemo(){
-  const input = document.getElementById('demoSkillInput');
-  const btn = document.getElementById('demoBtn');
-  const result = document.getElementById('demoResult');
-  const skill = input.value.trim() || "I'm a video editor who creates TikTok, YouTube and football videos.";
-  btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
   try{
-    const data = await askAI(
-      `Freelancer skill description: "${skill}"`,
-      `You are a branding assistant for a freelancer platform. Given a one-sentence skill description, output JSON with keys: headline (a punchy professional headline, under 8 words), tagline (one sentence, under 18 words, written in first person), tags (array of exactly 4 short skill/service tags).`,
-      true
-    );
-    result.innerHTML = `
-      <div class="pill" style="margin-bottom:10px;">✨ AI-generated preview</div>
-      <div class="demo-headline">${escapeHtml(data.headline)}</div>
-      <div class="muted" style="font-size:14.5px; line-height:1.5;">${escapeHtml(data.tagline)}</div>
-      <div class="demo-tags">${data.tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
-      <a href="#/onboarding" class="btn btn-primary btn-sm" style="margin-top:16px;">Build my full profile →</a>
-    `;
-    result.classList.add('show');
+    const result = await callAI(data);
+    renderPortfolio(data, result);
+    loadingScreen.classList.remove('active');
+    document.getElementById('portfolio').classList.add('active');
+  }catch(err){
+    loadingScreen.classList.remove('active');
+    document.getElementById('intake').style.display = 'block';
+    showError('Could not compile the portfolio just now (' + (err.message || 'unknown error') + '). Please try again.');
+    console.error(err);
+  }finally{
+    clearInterval(interval);
+  }
+}
+
+function backToEdit(){
+  document.getElementById('portfolio').classList.remove('active');
+  document.getElementById('intake').style.display = 'block';
+}
+
+async function callAI(data){
+  const projectsText = data.projects.map((p,i)=>`Project ${i+1}: "${p.title}". Notes: ${p.notes || '(no notes given)'}`).join('\n');
+
+  const prompt = `You are helping a freelancer turn rough notes into polished portfolio website copy. Write in a confident, human, specific voice — never generic marketing fluff, no buzzwords like "passionate" or "synergy". Keep every piece of copy grounded in what was actually provided; do not invent facts, clients, or numbers that weren't given.
+
+FREELANCER DATA:
+Name: ${data.name}
+Role: ${data.title}
+Location: ${data.location || '(not given)'}
+Years working: ${data.years || '(not given)'}
+Existing tagline (use if given, otherwise write one): ${data.tagline || '(none — please write one)'}
+Desired tagline tone: ${data.taglineTone || '(no preference — use your judgment)'}
+Raw background notes: ${data.about || '(none given)'}
+Skills (raw list): ${data.skills || '(none given)'}
+Tools (raw list): ${data.tools || '(none given)'}
+
+PROJECTS (raw notes):
+${projectsText || '(no projects given)'}
+
+Return ONLY a JSON object, no markdown fences, no preamble, matching exactly this shape:
+{
+  "tagline": "one punchy line, under 12 words",
+  "about": "a 2-4 sentence first-person bio in the freelancer's voice, written from their raw notes",
+  "skill_groups": [ { "group": "short category name", "items": ["skill", "skill"] } ],
+  "projects": [ { "title": "project title", "blurb": "2-3 sentence description of the project and the freelancer's role/outcome, in third person", "tags": ["1-3 short tags"] } ],
+  "closing_statement": "one short, warm, first-person closing line inviting contact, under 25 words"
+}
+
+Group skills into 2-4 sensible categories based on the raw list given (e.g. "Design", "Front-end", "Research") — if the list is short, one group is fine. Keep skill_groups items exactly matching the count of projects given (same order) for the projects array.`;
+
+  const response = await fetch("/api/openai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      prompt: prompt,
+      temperature: 0.6,
+      max_tokens: 1500
+    })
+  });
+
+  const json = await response.json();
+  if(!response.ok){
+    throw new Error(json.error || ('AI request failed (' + response.status + ')'));
+  }
+  const text = (json.content || '').trim();
+  const cleaned = text.replace(/^```json\s*|^```\s*|```$/gm, '').trim();
+  let parsed;
+  try{
+    parsed = JSON.parse(cleaned);
   }catch(e){
-    console.error(e);
-    result.innerHTML = `<p class="muted">Couldn't reach the AI right now — try again in a moment.</p>`;
-    result.classList.add('show');
+    throw new Error('could not read AI response');
   }
-  btn.innerHTML='Try it';
-  btn.disabled=false;
-}
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-</script>
-
-<script>
-/* ============ ONBOARDING ============ */
-const ONBOARD_STEPS = ['basics','skill','services','contact','photo','portfolio','review'];
-
-function OnboardingPage(){
-  const step = STATE.onboardStep;
-  const total = ONBOARD_STEPS.length;
-  const pct = Math.round(((step+1)/total)*100);
-  return `
-  <div class="onboard-shell">
-    <div style="max-width:640px;margin:0 auto 24px;"><a href="#/" class="logo"><span class="logo-mark">AF</span> AI Freelancer</a></div>
-    <div class="progress-track"><div class="progress-bar" style="width:${pct}%"></div></div>
-    <div class="onboard-card"><div class="card">${OnboardStepBody(ONBOARD_STEPS[step])}</div></div>
-  </div>`;
+  return parsed;
 }
 
-function od(key, def){ return STATE.onboardData[key] ?? def ?? ''; }
-function setOd(key,val){ STATE.onboardData[key]=val; }
+function renderPortfolio(data, ai){
+  document.getElementById('pf-role').textContent = data.title;
+  document.getElementById('pf-name').textContent = data.name;
+  document.getElementById('pf-tagline').textContent = ai.tagline || data.tagline;
 
-function OnboardStepBody(step){
-  const d = STATE.onboardData;
-  if(step==='basics'){
+  const metaBits = [];
+  if(data.location) metaBits.push(data.location);
+  if(data.years) metaBits.push(data.years + (isNaN(data.years) ? '' : ' yrs experience'));
+  document.getElementById('pf-meta').innerHTML = metaBits.map(m=>`<span>${escapeHtml(m)}</span>`).join('');
+
+  document.getElementById('pf-about').textContent = ai.about || data.about;
+
+  const skillsWrap = document.getElementById('pf-skills');
+  skillsWrap.innerHTML = (ai.skill_groups || []).map(g => `
+    <div class="skill-group">
+      <div class="g-name">${escapeHtml(g.group)}</div>
+      <div class="chips">${(g.items||[]).map(i=>`<span class="chip">${escapeHtml(i)}</span>`).join('')}</div>
+    </div>
+  `).join('');
+
+  const projWrap = document.getElementById('pf-projects');
+  const aiProjects = ai.projects || [];
+  projWrap.innerHTML = data.projects.map((p, i) => {
+    const gen = aiProjects[i] || {};
+    const num = String(i+1).padStart(2,'0');
+    const linkHtml = p.link ? `<a class="plink" href="${escapeAttr(p.link)}" target="_blank" rel="noopener">View →</a>` : '';
     return `
-      <div class="step-label">Step 1 of 7 — The basics</div>
-      <h2 style="margin-bottom:22px;">Let's get to know you</h2>
-      <div class="field"><label>Full name</label><input id="f_name" value="${escapeHtml(od('name'))}" placeholder="e.g. Amaka Obi"/></div>
-      <div class="row2">
-        <div class="field"><label>Location</label><input id="f_location" value="${escapeHtml(od('location'))}" placeholder="e.g. Lagos, Nigeria"/></div>
-        <div class="field"><label>Experience level</label>
-          <div class="chip-select" id="f_experience">
-            ${['Beginner','Intermediate','Experienced','Expert'].map(l=>`<span class="chip ${od('experience')===l?'active':''}" onclick="pickChip('f_experience','experience','${l}')">${l}</span>`).join('')}
-          </div>
+      <div class="pcard">
+        <div class="idx mono">${num}</div>
+        <div>
+          <h3>${escapeHtml(gen.title || p.title)}</h3>
+          <div class="ptags">${(gen.tags||[]).map(t=>`<span>#${escapeHtml(t)}</span>`).join('')}</div>
+          <p>${escapeHtml(gen.blurb || p.notes)}</p>
+          ${linkHtml}
         </div>
       </div>
-      ${NavButtons(false)}
     `;
-  }
-  if(step==='skill'){
-    return `
-      <div class="step-label">Step 2 of 7 — Your skill</div>
-      <h2 style="margin-bottom:22px;">What do you do?</h2>
-      <div class="field"><label>Describe your skill in one sentence</label>
-        <textarea id="f_skill" rows="3" placeholder="I'm a video editor who creates TikTok, YouTube and football videos.">${escapeHtml(od('skill'))}</textarea>
-      </div>
-      <div class="field"><label>Your niche</label><input id="f_niche" value="${escapeHtml(od('niche'))}" placeholder="e.g. Sports & entertainment content"/></div>
-      <div class="field"><label>Target clients</label><input id="f_targetClients" value="${escapeHtml(od('targetClients'))}" placeholder="e.g. Football creators, small brands, YouTubers"/></div>
-      ${NavButtons(true)}
-    `;
-  }
-  if(step==='services'){
-    const suggested = ['Video editing','Content strategy','Thumbnail design','Short-form clipping','Motion graphics','Color grading','Sound design','YouTube management'];
-    const chosen = od('services',[]);
-    return `
-      <div class="step-label">Step 3 of 7 — Services</div>
-      <h2 style="margin-bottom:22px;">What services do you offer?</h2>
-      <div class="field"><label>Pick all that apply (or add your own below)</label>
-        <div class="chip-select" id="f_services">
-          ${suggested.map(s=>`<span class="chip ${chosen.includes(s)?'active':''}" onclick="toggleChip('f_services','services','${s}')">${s}</span>`).join('')}
-        </div>
-      </div>
-      <div class="field"><label>Other services (comma separated)</label><input id="f_customServices" value="${escapeHtml(od('customServices'))}" placeholder="e.g. Podcast editing, Reels strategy"/></div>
-      ${NavButtons(true)}
-    `;
-  }
-  if(step==='contact'){
-    return `
-      <div class="step-label">Step 4 of 7 — Contact</div>
-      <h2 style="margin-bottom:22px;">How should clients reach you?</h2>
-      <div class="row2">
-        <div class="field"><label>Email</label><input id="f_email" type="email" value="${escapeHtml(od('email'))}" placeholder="you@email.com"/></div>
-        <div class="field"><label>WhatsApp number</label><input id="f_whatsapp" value="${escapeHtml(od('whatsapp'))}" placeholder="e.g. 2348012345678"/></div>
-      </div>
-      ${NavButtons(true)}
-    `;
-  }
-  if(step==='photo'){
-    return `
-      <div class="step-label">Step 5 of 7 — Profile photo</div>
-      <h2 style="margin-bottom:22px;">Add a profile picture</h2>
-      <div class="upload-box" onclick="document.getElementById('f_photo').click()">
-        <div id="photoPreviewWrap">${od('photo') ? `<img src="${od('photo')}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;"/>` : '<div style="font-size:26px;">📷</div><p style="margin-top:8px;">Click to upload (optional — you can add this later)</p>'}</div>
-      </div>
-      <input type="file" id="f_photo" accept="image/*" class="hidden" onchange="handlePhoto(event)"/>
-      ${NavButtons(false)}
-    `;
-  }
-  if(step==='portfolio'){
-    const items = od('portfolioSeed',[]);
-    return `
-      <div class="step-label">Step 6 of 7 — Portfolio (optional)</div>
-      <h2 style="margin-bottom:22px;">Got a project or two to show?</h2>
-      <p class="muted" style="margin-bottom:16px;">You can skip this and add full projects later in your dashboard.</p>
-      <div class="field"><label>Project name</label><input id="pf_name" placeholder="e.g. Highlight reel for local football club"/></div>
-      <div class="field"><label>Quick description</label><textarea id="pf_desc" rows="2" placeholder="What did you make and for whom?"></textarea></div>
-      <button class="btn btn-ghost btn-sm" onclick="addSeedProject()">+ Add project</button>
-      <div style="margin-top:14px;">${items.map((p,i)=>`<div class="list-item"><span>${escapeHtml(p.name)}</span><button class="btn btn-ghost btn-sm" onclick="removeSeedProject(${i})">Remove</button></div>`).join('')}</div>
-      ${NavButtons(false)}
-    `;
-  }
-  if(step==='review'){
-    return `
-      <div class="step-label">Step 7 of 7 — Ready</div>
-      <h2 style="margin-bottom:10px;">Generate your freelancer brand</h2>
-      <p class="muted" style="margin-bottom:20px;">AI Freelancer will now build your headline, bio, services, portfolio copy, and starter website from what you've told us.</p>
-      <div class="card" style="background:var(--bg-sunken); box-shadow:none; margin-bottom:20px;">
-        <p style="font-size:14px;"><b>${escapeHtml(od('name'))}</b> · ${escapeHtml(od('location'))}</p>
-        <p class="muted" style="font-size:13.5px; margin-top:6px;">${escapeHtml(od('skill'))}</p>
-      </div>
-      <button class="btn btn-primary btn-block" id="genBtn" onclick="generateProfile()">✨ Generate My Profile</button>
-      <div id="genStatus" class="muted" style="text-align:center; margin-top:12px; font-size:13.5px;"></div>
-    `;
-  }
+  }).join('');
+
+  document.getElementById('pf-closing').textContent = ai.closing_statement || `Get in touch — I'd love to hear about your project.`;
+
+  const contactWrap = document.getElementById('pf-contacts');
+  let contactHtml = '';
+  if(data.email) contactHtml += `<a href="mailto:${escapeAttr(data.email)}">${escapeHtml(data.email)}</a>`;
+  if(data.phone) contactHtml += `<a href="tel:${escapeAttr(data.phone)}">${escapeHtml(data.phone)}</a>`;
+  data.socials.forEach(s=>{
+    contactHtml += `<a href="${escapeAttr(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a>`;
+  });
+  contactWrap.innerHTML = contactHtml;
+
+  const now = new Date();
+  document.getElementById('pf-compiledAt').textContent = 'COMPILED ' + now.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}).toUpperCase();
 }
 
-function NavButtons(showBack){
-  const step = STATE.onboardStep;
-  return `<div class="nav-buttons">
-    <button class="btn btn-ghost" onclick="onboardBack()" ${step===0?'style="visibility:hidden"':''}>← Back</button>
-    <button class="btn btn-primary" onclick="onboardNext()">Continue →</button>
-  </div>`;
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-function pickChip(containerId, field, val){
-  setOd(field, val);
-  render();
-}
-function toggleChip(containerId, field, val){
-  let arr = od(field, []);
-  arr = arr.includes(val) ? arr.filter(x=>x!==val) : [...arr, val];
-  setOd(field, arr);
-  render();
-}
-function handlePhoto(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{ setOd('photo', reader.result); render(); };
-  reader.readAsDataURL(file);
-}
-function addSeedProject(){
-  const name = document.getElementById('pf_name').value.trim();
-  const desc = document.getElementById('pf_desc').value.trim();
-  if(!name) return toast('Add a project name first');
-  const arr = od('portfolioSeed', []);
-  arr.push({name, desc});
-  setOd('portfolioSeed', arr);
-  render();
-}
-function removeSeedProject(i){
-  const arr = od('portfolioSeed', []);
-  arr.splice(i,1);
-  setOd('portfolioSeed', arr);
-  render();
-}
-function captureCurrentStepInputs(){
-  const step = ONBOARD_STEPS[STATE.onboardStep];
-  if(step==='basics'){ setOd('name', document.getElementById('f_name').value.trim()); setOd('location', document.getElementById('f_location').value.trim()); }
-  if(step==='skill'){ setOd('skill', document.getElementById('f_skill').value.trim()); setOd('niche', document.getElementById('f_niche').value.trim()); setOd('targetClients', document.getElementById('f_targetClients').value.trim()); }
-  if(step==='services'){ setOd('customServices', document.getElementById('f_customServices').value.trim()); }
-  if(step==='contact'){ setOd('email', document.getElementById('f_email').value.trim()); setOd('whatsapp', document.getElementById('f_whatsapp').value.trim()); }
-}
-function onboardNext(){
-  captureCurrentStepInputs();
-  const step = ONBOARD_STEPS[STATE.onboardStep];
-  if(step==='basics' && !od('name')) return toast('Please enter your name');
-  if(step==='skill' && !od('skill')) return toast('Please describe your skill');
-  if(step==='contact' && !od('email')) return toast('Please enter an email');
-  if(STATE.onboardStep < ONBOARD_STEPS.length-1) STATE.onboardStep++;
-  render();
-}
-function onboardBack(){
-  captureCurrentStepInputs();
-  if(STATE.onboardStep>0) STATE.onboardStep--;
-  render();
-}
-
-async function generateProfile(){
-  const btn = document.getElementById('genBtn');
-  const status = document.getElementById('genStatus');
-  btn.innerHTML = '<span class="spinner"></span> Generating…';
-  btn.disabled = true;
-  const d = STATE.onboardData;
-  const allServices = [...(d.services||[]), ...((d.customServices||'').split(',').map(s=>s.trim()).filter(Boolean))];
-  try{
-    status.textContent = 'Writing your profile…';
-    const profile = await askAI(
-      `Name: ${d.name}\nSkill: ${d.skill}\nNiche: ${d.niche||'general'}\nExperience: ${d.experience||'Intermediate'}\nServices: ${allServices.join(', ')||'general services'}\nTarget clients: ${d.targetClients||'small businesses'}\nLocation: ${d.location||''}`,
-      `You are an expert freelance branding copywriter for African freelancers. Given the freelancer's info, output JSON with keys:
-      headline (professional headline, under 9 words),
-      shortIntro (1 sentence, first-person, under 22 words, for a hero section),
-      bio (2 short paragraphs, first-person, warm and confident, plain text with \\n\\n between paragraphs),
-      about (1 paragraph, third-person, for an About page, under 90 words),
-      skills (array of 6 specific skill tags),
-      services (array of up to 6 objects each with title and oneLiner),
-      cta (a short call-to-action sentence, under 12 words).`,
-      true
-    );
-    status.textContent = 'Building your starter website…';
-    const website = await askAI(
-      `Freelancer: ${d.name}, ${profile.headline}. Bio: ${profile.bio}. Services: ${allServices.join(', ')}. Location: ${d.location}.`,
-      `Generate JSON for a one-page freelancer website with keys: seoTitle (under 60 chars), seoDescription (under 155 chars), heroLine (punchy, under 12 words), faq (array of 4 objects with q and a, a under 35 words each), testimonialPlaceholder (one realistic-sounding sample client quote under 30 words, clearly a placeholder example).`,
-      true
-    );
-    STATE.user = {
-      name:d.name, location:d.location, experience:d.experience||'Intermediate', skillRaw:d.skill, niche:d.niche,
-      targetClients:d.targetClients, email:d.email, whatsapp:d.whatsapp, photo:d.photo||'',
-      headline:profile.headline, shortIntro:profile.shortIntro, bio:profile.bio, about:profile.about,
-      skills:profile.skills, services:profile.services, cta:profile.cta
-    };
-    STATE.website = {
-      seoTitle:website.seoTitle, seoDescription:website.seoDescription, heroLine:website.heroLine,
-      faq:website.faq, testimonial:website.testimonialPlaceholder, social:{instagram:'',tiktok:'',x:'',linkedin:''}
-    };
-    if((d.portfolioSeed||[]).length){
-      STATE.portfolio = d.portfolioSeed.map(p=>({name:p.name, description:p.desc, type:'', results:'', skills:'', improved:false}));
-    }
-    await S.set('user', STATE.user);
-    await S.set('website', STATE.website);
-    await S.set('portfolio', STATE.portfolio);
-    useCredit(); useCredit();
-    toast('Your freelancer brand is ready 🎉');
-    go('/dashboard/overview');
-  }catch(e){
-    console.error(e);
-    status.textContent = "Something went wrong reaching the AI. Please try again.";
-    btn.innerHTML = '✨ Generate My Profile';
-    btn.disabled = false;
-  }
-}
-</script>
-
-<script>
-/* ============ DASHBOARD SHELL ============ */
-const SIDE_ITEMS = [
-  {id:'overview', label:'Overview', ic:ICONS.overview},
-  {id:'profile', label:'My Profile', ic:ICONS.profile},
-  {id:'portfolio', label:'My Portfolio', ic:ICONS.portfolio},
-  {id:'website', label:'My Website', ic:ICONS.website},
-  {id:'proposals', label:'AI Proposals', ic:ICONS.proposals},
-  {id:'messages', label:'Client Messages', ic:ICONS.messages},
-  {id:'pricingtool', label:'Pricing Assistant', ic:ICONS.pricing},
-  {id:'social', label:'Social Content', ic:ICONS.social},
-  {id:'subscription', label:'Subscription', ic:ICONS.subscription},
-  {id:'settings', label:'Settings', ic:ICONS.settings},
-];
-
-function DashboardShell(active){
-  const u = STATE.user || {};
-  const initials = (u.name||'U').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  return `
-  <div class="app-shell">
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-logo"><a href="#/" class="logo"><span class="logo-mark">AF</span> AI Freelancer</a></div>
-      <div>
-        ${SIDE_ITEMS.map(it=>`<a class="side-link ${active===it.id?'active':''}" href="#/dashboard/${it.id}"><span class="ic">${it.ic}</span> ${it.label}</a>`).join('')}
-      </div>
-      <div class="side-foot">
-        <div class="usage-box">
-          <div style="display:flex; justify-content:space-between; font-size:12.5px;"><span class="muted">AI usage</span><b>${STATE.usage.used}/${STATE.usage.limit}</b></div>
-          <div class="usage-bar-track"><div class="usage-bar" style="width:${Math.min(100,(STATE.usage.used/STATE.usage.limit)*100)}%"></div></div>
-          <a href="#/dashboard/subscription" class="btn btn-gold btn-sm btn-block" style="margin-top:10px;">Upgrade plan</a>
-        </div>
-        <a class="side-link" href="#/admin"><span class="ic">${ICONS.admin}</span> Admin (owner)</a>
-        <a class="side-link" href="#/" onclick="return true;"><span class="ic">${ICONS.logout}</span> Log out</a>
-      </div>
-    </div>
-    <div class="main">
-      <div class="topbar">
-        <button class="icon-btn" style="display:none;" id="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-        <div style="font-weight:700; text-transform:capitalize; font-family:var(--font-d);">${SIDE_ITEMS.find(x=>x.id===active)?.label || 'Dashboard'}</div>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span class="pill">${STATE.plan.toUpperCase()} PLAN</span>
-          <button class="icon-btn" onclick="toggleTheme(); render();">${STATE.theme==='light'?'☾':'☀'}</button>
-          <div class="avatar">${initials}</div>
-        </div>
-      </div>
-      <div class="content" id="dashContent">${DashboardBody(active)}</div>
-    </div>
-  </div>
-  <style>@media(max-width:900px){#hamburger{display:flex !important;}}</style>
-  `;
-}
-
-function afterDashboardRender(sub){
-  // hook for any post-render JS if needed later
-}
-
-function DashboardBody(active){
-  switch(active){
-    case 'overview': return OverviewView();
-    case 'profile': return ProfileView();
-    case 'portfolio': return PortfolioView();
-    case 'website': return WebsiteView();
-    case 'proposals': return ProposalsView();
-    case 'messages': return MessagesView();
-    case 'pricingtool': return PricingToolView();
-    case 'social': return SocialView();
-    case 'subscription': return SubscriptionView();
-    case 'settings': return SettingsView();
-    default: return OverviewView();
-  }
-}
-
-function OverviewView(){
-  const u = STATE.user;
-  return `
-  <div class="stat-grid">
-    <div class="stat-card"><span class="muted" style="font-size:13px;">Portfolio projects</span><div class="num">${STATE.portfolio.length}</div></div>
-    <div class="stat-card"><span class="muted" style="font-size:13px;">Proposals sent</span><div class="num">${STATE.proposals.length}</div></div>
-    <div class="stat-card"><span class="muted" style="font-size:13px;">AI credits left</span><div class="num">${creditsLeft()}</div></div>
-    <div class="stat-card"><span class="muted" style="font-size:13px;">Plan</span><div class="num" style="text-transform:capitalize;">${STATE.plan}</div></div>
-  </div>
-  <div class="two-col">
-    <div class="card">
-      <div class="section-title">Welcome back, ${escapeHtml((u.name||'').split(' ')[0]||'there')} 👋</div>
-      <p class="muted" style="margin:6px 0 18px;">${escapeHtml(u.headline)}</p>
-      <p style="font-size:14.5px; line-height:1.7;">${escapeHtml(u.shortIntro)}</p>
-      <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
-        <a href="#/dashboard/proposals" class="btn btn-primary btn-sm">Write a proposal</a>
-        <a href="#/dashboard/website" class="btn btn-ghost btn-sm">View my website</a>
-        <a href="#/dashboard/portfolio" class="btn btn-ghost btn-sm">Add portfolio project</a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="section-title" style="font-size:17px;">Quick tips</div>
-      <ul style="margin-top:14px; padding-left:18px; font-size:14px; color:var(--text-muted); line-height:2;">
-        <li>Add at least 3 portfolio projects to build client trust.</li>
-        <li>Fill in your WhatsApp so clients can reach you directly from your website.</li>
-        <li>Generate social captions weekly to stay visible.</li>
-      </ul>
-    </div>
-  </div>`;
-}
-
-function ProfileView(){
-  const u = STATE.user;
-  return `
-  <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
-      <div>
-        <div class="section-title">My Freelancer Profile</div>
-        <p class="muted" style="font-size:13.5px;">Click any text to edit it directly.</p>
-      </div>
-      <button class="btn btn-ghost btn-sm" onclick="regenProfile()">↻ Regenerate with AI</button>
-    </div>
-    <label>Headline</label>
-    <div class="editable" contenteditable="true" style="font-size:19px; font-weight:700; font-family:var(--font-d); margin-bottom:16px;" onblur="saveField('user','headline',this.innerText)">${escapeHtml(u.headline)}</div>
-    <label>Short intro</label>
-    <div class="editable" contenteditable="true" style="margin-bottom:16px; font-size:14.5px;" onblur="saveField('user','shortIntro',this.innerText)">${escapeHtml(u.shortIntro)}</div>
-    <label>Bio</label>
-    <div class="editable" contenteditable="true" style="margin-bottom:16px; font-size:14.5px; line-height:1.7; white-space:pre-wrap;" onblur="saveField('user','bio',this.innerText)">${escapeHtml(u.bio)}</div>
-    <label>About</label>
-    <div class="editable" contenteditable="true" style="margin-bottom:16px; font-size:14.5px; line-height:1.7;" onblur="saveField('user','about',this.innerText)">${escapeHtml(u.about)}</div>
-    <label>Call to action</label>
-    <div class="editable" contenteditable="true" style="margin-bottom:16px; font-size:14.5px; font-weight:600;" onblur="saveField('user','cta',this.innerText)">${escapeHtml(u.cta)}</div>
-    <label>Skills</label>
-    <div class="demo-tags" style="margin-bottom:16px;">${u.skills.map(s=>`<span class="tag">${escapeHtml(s)}</span>`).join('')}</div>
-    <label>Services</label>
-    <div style="display:grid; gap:10px; margin-top:6px;">
-      ${u.services.map(s=>`<div class="list-item" style="cursor:default;"><div><b>${escapeHtml(s.title)}</b><div class="muted" style="font-size:13px;">${escapeHtml(s.oneLiner)}</div></div></div>`).join('')}
-    </div>
-  </div>`;
-}
-async function saveField(obj, field, val){
-  STATE[obj][field] = val.trim();
-  await S.set(obj, STATE[obj]);
-  toast('Saved');
-}
-async function regenProfile(){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  toast('Regenerating profile…');
-  const u = STATE.user;
-  try{
-    const profile = await askAI(
-      `Name: ${u.name}\nSkill: ${u.skillRaw}\nNiche: ${u.niche}\nExperience: ${u.experience}\nTarget clients: ${u.targetClients}`,
-      `You are an expert freelance branding copywriter. Rewrite this freelancer's profile with a fresh angle. Output JSON with keys headline, shortIntro, bio, about, cta — same constraints as before (headline under 9 words, shortIntro under 22 words first-person, bio two paragraphs separated by \\n\\n, about under 90 words third-person, cta under 12 words).`,
-      true
-    );
-    Object.assign(STATE.user, profile);
-    await S.set('user', STATE.user);
-    useCredit();
-    toast('Profile regenerated ✨');
-    render();
-  }catch(e){ console.error(e); toast('AI request failed — try again'); }
-}
-
-function PortfolioView(){
-  return `
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-    <div><div class="section-title">My Portfolio</div><p class="muted" style="font-size:13.5px;">${STATE.portfolio.length} project${STATE.portfolio.length!==1?'s':''}</p></div>
-    <button class="btn btn-primary btn-sm" onclick="showAddProjectModal()">+ Add project</button>
-  </div>
-  <div style="display:grid; gap:16px;">
-    ${STATE.portfolio.length===0 ? `<div class="card" style="text-align:center; padding:50px;"><p class="muted">No projects yet. Add your first one to start building trust with clients.</p></div>` : ''}
-    ${STATE.portfolio.map((p,i)=>`
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
-          <div>
-            <h3 style="font-size:17px;">${escapeHtml(p.name)}</h3>
-            <p class="muted" style="font-size:13px; margin-top:2px;">${escapeHtml(p.type||'')}${p.skills?' · '+escapeHtml(p.skills):''}</p>
-          </div>
-          <div style="display:flex; gap:6px; flex-shrink:0;">
-            <button class="btn btn-ghost btn-sm" onclick="improveProject(${i})">${p.improved?'✓ Improved':'✨ Improve with AI'}</button>
-            <button class="btn btn-ghost btn-sm" onclick="removeProject(${i})">✕</button>
-          </div>
-        </div>
-        <p style="font-size:14.5px; margin-top:12px; line-height:1.6;">${escapeHtml(p.description)}</p>
-        ${p.results?`<p style="margin-top:8px; font-size:13.5px;"><b>Results:</b> ${escapeHtml(p.results)}</p>`:''}
-      </div>`).join('')}
-  </div>
-  <div id="modalHost"></div>`;
-}
-function showAddProjectModal(){
-  document.getElementById('modalHost').innerHTML = `
-  <div class="modal-bg" onclick="if(event.target===this)this.remove()">
-    <div class="modal">
-      <h3 style="margin-bottom:16px;">Add portfolio project</h3>
-      <div class="field"><label>Project name</label><input id="np_name" placeholder="e.g. Match-day highlight reel"/></div>
-      <div class="field"><label>Description</label><textarea id="np_desc" rows="3" placeholder="What did you do?"></textarea></div>
-      <div class="row2">
-        <div class="field"><label>Client / project type</label><input id="np_type" placeholder="e.g. Sports brand"/></div>
-        <div class="field"><label>Results</label><input id="np_results" placeholder="e.g. 2M views in 1 week"/></div>
-      </div>
-      <div class="field"><label>Skills used</label><input id="np_skills" placeholder="e.g. Premiere Pro, Motion graphics"/></div>
-      <div style="display:flex; gap:10px; margin-top:6px;">
-        <button class="btn btn-ghost btn-block" onclick="document.querySelector('.modal-bg').remove()">Cancel</button>
-        <button class="btn btn-primary btn-block" onclick="addProject()">Add project</button>
-      </div>
-    </div>
-  </div>`;
-}
-async function addProject(){
-  const name = document.getElementById('np_name').value.trim();
-  if(!name) return toast('Add a project name');
-  const p = {
-    name, description:document.getElementById('np_desc').value.trim(),
-    type:document.getElementById('np_type').value.trim(), results:document.getElementById('np_results').value.trim(),
-    skills:document.getElementById('np_skills').value.trim(), improved:false
-  };
-  STATE.portfolio.push(p);
-  await S.set('portfolio', STATE.portfolio);
-  document.querySelector('.modal-bg').remove();
-  render();
-  toast('Project added');
-}
-async function removeProject(i){
-  STATE.portfolio.splice(i,1);
-  await S.set('portfolio', STATE.portfolio);
-  render();
-}
-async function improveProject(i){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  const p = STATE.portfolio[i];
-  toast('Improving description…');
-  try{
-    const out = await askAI(
-      `Project name: ${p.name}\nCurrent description: ${p.description}\nClient/type: ${p.type}\nResults: ${p.results}\nSkills: ${p.skills}\nFreelancer skill: ${STATE.user.skillRaw}`,
-      `Rewrite this portfolio project description to be more compelling and specific for potential clients, 2-3 sentences, confident and concrete. Output JSON with key description only.`,
-      true
-    );
-    STATE.portfolio[i].description = out.description;
-    STATE.portfolio[i].improved = true;
-    await S.set('portfolio', STATE.portfolio);
-    useCredit();
-    render();
-    toast('Description improved ✨');
-  }catch(e){ console.error(e); toast('AI request failed'); }
-}
-
-function WebsiteView(){
-  const u = STATE.user, w = STATE.website;
-  return `
-  <div class="two-col">
-    <div>
-      <div class="card" style="padding:0; overflow:hidden;">
-        <div style="background:linear-gradient(135deg,var(--brand),var(--gold)); padding:46px 30px; color:#fff; text-align:center;">
-          ${u.photo?`<img src="${u.photo}" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.6); margin-bottom:14px;"/>`:''}
-          <h2 style="color:#fff; font-size:26px;">${escapeHtml(w.heroLine)}</h2>
-          <p style="opacity:.9; margin-top:8px;">${escapeHtml(u.shortIntro)}</p>
-          <div style="margin-top:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-            <span class="pill" style="background:rgba(255,255,255,.2); color:#fff;">📱 WhatsApp: ${escapeHtml(u.whatsapp||'—')}</span>
-            <span class="pill" style="background:rgba(255,255,255,.2); color:#fff;">✉ ${escapeHtml(u.email||'—')}</span>
-          </div>
-        </div>
-        <div style="padding:26px;">
-          <h3 style="margin-bottom:10px;">About</h3>
-          <p class="muted" style="font-size:14.5px; margin-bottom:22px; line-height:1.6;">${escapeHtml(u.about)}</p>
-          <h3 style="margin-bottom:10px;">Services</h3>
-          <div style="display:grid; gap:8px; margin-bottom:22px;">
-            ${u.services.map(s=>`<div class="list-item" style="cursor:default;"><b>${escapeHtml(s.title)}</b><span class="muted" style="font-size:13px;">${escapeHtml(s.oneLiner)}</span></div>`).join('')}
-          </div>
-          <h3 style="margin-bottom:10px;">Portfolio</h3>
-          <div style="display:grid; gap:8px; margin-bottom:22px;">
-            ${STATE.portfolio.length? STATE.portfolio.map(p=>`<div class="list-item" style="cursor:default;">${escapeHtml(p.name)}</div>`).join('') : `<p class="muted" style="font-size:13.5px;">No projects added yet.</p>`}
-          </div>
-          <h3 style="margin-bottom:10px;">Testimonial</h3>
-          <p class="muted" style="font-style:italic; font-size:14px;">"${escapeHtml(w.testimonial)}"</p>
-          <h3 style="margin:22px 0 10px;">FAQ</h3>
-          ${w.faq.map(f=>`<div style="margin-bottom:12px;"><b style="font-size:14px;">${escapeHtml(f.q)}</b><p class="muted" style="font-size:13.5px; margin-top:3px;">${escapeHtml(f.a)}</p></div>`).join('')}
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="card" style="margin-bottom:16px;">
-        <h3 style="margin-bottom:12px; font-size:16px;">Site settings</h3>
-        <div class="field"><label>SEO title</label><div class="editable" contenteditable="true" onblur="saveWebsiteField('seoTitle',this.innerText)">${escapeHtml(w.seoTitle)}</div></div>
-        <div class="field"><label>SEO description</label><div class="editable" contenteditable="true" style="font-size:13.5px;" onblur="saveWebsiteField('seoDescription',this.innerText)">${escapeHtml(w.seoDescription)}</div></div>
-        <label>Social links</label>
-        <div class="field"><input placeholder="Instagram URL" value="${escapeHtml(w.social.instagram)}" onblur="saveSocialLink('instagram',this.value)"/></div>
-        <div class="field"><input placeholder="TikTok URL" value="${escapeHtml(w.social.tiktok)}" onblur="saveSocialLink('tiktok',this.value)"/></div>
-        <div class="field"><input placeholder="X (Twitter) URL" value="${escapeHtml(w.social.x)}" onblur="saveSocialLink('x',this.value)"/></div>
-        <button class="btn btn-ghost btn-block" onclick="regenWebsite()">↻ Regenerate site copy</button>
-      </div>
-      <div class="card">
-        <h3 style="margin-bottom:8px; font-size:16px;">Publish</h3>
-        <p class="muted" style="font-size:13px; margin-bottom:14px;">${STATE.plan==='free'?'Your site includes AI Freelancer branding on the Free plan.':'Custom domain ready — connect it from Settings.'}</p>
-        <button class="btn btn-primary btn-block" onclick="toast('Site published (demo) — share your dashboard link with clients).')">Publish site</button>
-      </div>
-    </div>
-  </div>`;
-}
-async function saveWebsiteField(field,val){ STATE.website[field]=val.trim(); await S.set('website',STATE.website); toast('Saved'); }
-async function saveSocialLink(k,val){ STATE.website.social[k]=val.trim(); await S.set('website',STATE.website); }
-async function regenWebsite(){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  toast('Regenerating site copy…');
-  try{
-    const u = STATE.user;
-    const out = await askAI(
-      `Freelancer: ${u.name}, ${u.headline}. Bio: ${u.bio}`,
-      `Generate JSON with keys heroLine (under 12 words, fresh angle) and testimonialPlaceholder (sample client quote under 30 words) for this freelancer's website.`, true
-    );
-    STATE.website.heroLine = out.heroLine;
-    STATE.website.testimonial = out.testimonialPlaceholder;
-    await S.set('website', STATE.website);
-    useCredit(); render(); toast('Site copy refreshed');
-  }catch(e){ console.error(e); toast('AI request failed'); }
-}
-
-function ProposalsView(){
-  return `
-  <div class="card" style="margin-bottom:22px;">
-    <div class="section-title" style="margin-bottom:14px;">AI Proposal Generator</div>
-    <div class="field"><label>Paste the client's job description</label><textarea id="jobDesc" rows="5" placeholder="Paste the job post here…"></textarea></div>
-    <label>Tone</label>
-    <div class="chip-select" id="toneSelect" style="margin-bottom:18px;">
-      ${['Professional','Friendly','Short','Premium'].map((t,i)=>`<span class="chip ${i===0?'active':''}" onclick="selectChipGroup('toneSelect',this)">${t}</span>`).join('')}
-    </div>
-    <button class="btn btn-primary" id="propBtn" onclick="generateProposal()">✨ Generate proposal</button>
-    <div id="proposalOutput"></div>
-  </div>
-  <div class="section-title" style="font-size:17px; margin-bottom:12px;">Saved proposals</div>
-  ${STATE.proposals.length===0?`<p class="muted">No saved proposals yet.</p>`:''}
-  ${STATE.proposals.map((p,i)=>`<div class="card" style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span class="pill">${p.tone}</span><button class="btn btn-ghost btn-sm" onclick="deleteProposal(${i})">Delete</button></div><p style="font-size:14px; margin-top:10px; white-space:pre-wrap; line-height:1.6;">${escapeHtml(p.text)}</p></div>`).join('')}
-  `;
-}
-function selectChipGroup(containerId, el){
-  document.querySelectorAll(`#${containerId} .chip`).forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-}
-async function generateProposal(){
-  const job = document.getElementById('jobDesc').value.trim();
-  if(!job) return toast('Paste a job description first');
-  if(creditsLeft()<=0) return showUpgradeModal();
-  const tone = document.querySelector('#toneSelect .chip.active').textContent;
-  const btn = document.getElementById('propBtn');
-  btn.innerHTML = '<span class="spinner spinner-dark"></span> Writing…'; btn.disabled=true;
-  const u = STATE.user;
-  try{
-    const text = await askAI(
-      `Freelancer name: ${u.name}\nSkill: ${u.skillRaw}\nHeadline: ${u.headline}\nBio: ${u.bio}\nServices: ${u.services.map(s=>s.title).join(', ')}\n\nClient job post:\n${job}\n\nTone requested: ${tone}`,
-      `Write a personalized freelance job proposal from the freelancer to the client, in the requested tone (Professional, Friendly, Short, or Premium). Address the specific needs in the job post. 3-5 short paragraphs max for non-Short tones; Short tone should be under 80 words. End with a clear next step. Plain text only, no markdown headers.`
-    );
-    document.getElementById('proposalOutput').innerHTML = `
-      <div class="gen-output">${escapeHtml(text)}</div>
-      <div class="copy-row">
-        <button class="btn btn-ghost btn-sm" onclick="copyText(this)" data-text="${encodeURIComponent(text)}">📋 Copy</button>
-        <button class="btn btn-primary btn-sm" onclick="saveProposal('${encodeURIComponent(text)}','${tone}')">💾 Save</button>
-      </div>`;
-    useCredit();
-  }catch(e){ console.error(e); toast('AI request failed — try again'); }
-  btn.innerHTML='✨ Generate proposal'; btn.disabled=false;
-}
-async function saveProposal(encText, tone){
-  STATE.proposals.unshift({text:decodeURIComponent(encText), tone, date:new Date().toISOString()});
-  await S.set('proposals', STATE.proposals);
-  render();
-  toast('Proposal saved');
-}
-async function deleteProposal(i){ STATE.proposals.splice(i,1); await S.set('proposals',STATE.proposals); render(); }
-function copyText(el){
-  const text = decodeURIComponent(el.dataset.text);
-  navigator.clipboard.writeText(text).then(()=>toast('Copied to clipboard'));
-}
-
-const MSG_TYPES = ['First contact','Follow-up','Price negotiation','Project confirmation','Asking for requirements','Asking for feedback','Thanking a client'];
-function MessagesView(){
-  return `
-  <div class="card" style="margin-bottom:22px;">
-    <div class="section-title" style="margin-bottom:14px;">Client Message Generator</div>
-    <label>Message type</label>
-    <div class="chip-select" id="msgTypeSelect" style="margin-bottom:16px;">
-      ${MSG_TYPES.map((t,i)=>`<span class="chip ${i===0?'active':''}" onclick="selectChipGroup('msgTypeSelect',this)">${t}</span>`).join('')}
-    </div>
-    <div class="field"><label>Context (optional — client name, project details, etc.)</label><textarea id="msgContext" rows="3" placeholder="e.g. Client is Tobi, we agreed on a ₦60,000 highlight reel, deadline is Friday…"></textarea></div>
-    <button class="btn btn-primary" id="msgBtn" onclick="generateMessage()">✨ Generate message</button>
-    <div id="msgOutput"></div>
-  </div>
-  <div class="section-title" style="font-size:17px; margin-bottom:12px;">Saved messages</div>
-  ${STATE.messages.length===0?`<p class="muted">No saved messages yet.</p>`:''}
-  ${STATE.messages.map((m,i)=>`<div class="card" style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span class="pill">${m.type}</span><button class="btn btn-ghost btn-sm" onclick="deleteMessage(${i})">Delete</button></div><p style="font-size:14px; margin-top:10px; white-space:pre-wrap; line-height:1.6;">${escapeHtml(m.text)}</p></div>`).join('')}
-  `;
-}
-async function generateMessage(){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  const type = document.querySelector('#msgTypeSelect .chip.active').textContent;
-  const context = document.getElementById('msgContext').value.trim();
-  const btn = document.getElementById('msgBtn');
-  btn.innerHTML='<span class="spinner spinner-dark"></span> Writing…'; btn.disabled=true;
-  const u = STATE.user;
-  try{
-    const text = await askAI(
-      `Freelancer: ${u.name}, a ${u.skillRaw}\nMessage type: ${type}\nContext: ${context||'no extra context given'}`,
-      `Write a short, natural WhatsApp/DM-style message a freelancer would send to a client for the given message type. Warm but professional, under 80 words, no markdown, no subject line.`
-    );
-    document.getElementById('msgOutput').innerHTML = `
-      <div class="gen-output">${escapeHtml(text)}</div>
-      <div class="copy-row">
-        <button class="btn btn-ghost btn-sm" onclick="copyText(this)" data-text="${encodeURIComponent(text)}">📋 Copy</button>
-        <button class="btn btn-primary btn-sm" onclick="saveMessage('${encodeURIComponent(text)}','${type}')">💾 Save</button>
-      </div>`;
-    useCredit();
-  }catch(e){ console.error(e); toast('AI request failed'); }
-  btn.innerHTML='✨ Generate message'; btn.disabled=false;
-}
-async function saveMessage(encText,type){
-  STATE.messages.unshift({text:decodeURIComponent(encText), type, date:new Date().toISOString()});
-  await S.set('messages', STATE.messages); render(); toast('Message saved');
-}
-async function deleteMessage(i){ STATE.messages.splice(i,1); await S.set('messages',STATE.messages); render(); }
-
-function PricingToolView(){
-  const pk = STATE.pricingPkgs;
-  return `
-  <div class="card" style="margin-bottom:22px;">
-    <div class="section-title" style="margin-bottom:14px;">AI Pricing Assistant</div>
-    <div class="row2">
-      <div class="field"><label>Project type</label><input id="pt_type" placeholder="e.g. TikTok highlight reel"/></div>
-      <div class="field"><label>Difficulty</label>
-        <select id="pt_difficulty"><option>Simple</option><option selected>Moderate</option><option>Complex</option></select>
-      </div>
-    </div>
-    <div class="field"><label>Estimated duration</label><input id="pt_duration" placeholder="e.g. 3 days"/></div>
-    <button class="btn btn-primary" id="pricBtn" onclick="generatePricing()">✨ Suggest packages</button>
-  </div>
-  <div id="pricingOutput">${pk ? renderPricingPkgs(pk) : ''}</div>
-  `;
-}
-function renderPricingPkgs(pk){
-  return `<div class="grid3">
-    ${pk.map((p,i)=>`
-      <div class="card">
-        <h3 style="font-size:16px;">${escapeHtml(p.name)}</h3>
-        <div style="font-family:var(--font-d); font-size:24px; font-weight:800; margin:10px 0;">
-          ₦<span class="editable" contenteditable="true" onblur="editPkgPrice(${i},this.innerText)">${escapeHtml(String(p.price))}</span>
-        </div>
-        <p class="muted" style="font-size:13.5px; margin-bottom:12px;">${escapeHtml(p.description)}</p>
-        <ul style="list-style:none; display:flex; flex-direction:column; gap:6px;">
-          ${(p.includes||[]).map(x=>`<li style="font-size:13px;" class="muted">✓ ${escapeHtml(x)}</li>`).join('')}
-        </ul>
-      </div>`).join('')}
-  </div>`;
-}
-async function editPkgPrice(i,val){
-  const num = parseInt(val.replace(/[^0-9]/g,''))||0;
-  STATE.pricingPkgs[i].price = num;
-  await S.set('pricingPkgs', STATE.pricingPkgs);
-  toast('Price updated');
-}
-async function generatePricing(){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  const type = document.getElementById('pt_type').value.trim() || 'a typical project';
-  const difficulty = document.getElementById('pt_difficulty').value;
-  const duration = document.getElementById('pt_duration').value.trim() || 'a few days';
-  const btn = document.getElementById('pricBtn');
-  btn.innerHTML='<span class="spinner spinner-dark"></span> Calculating…'; btn.disabled=true;
-  const u = STATE.user;
-  try{
-    const out = await askAI(
-      `Freelancer skill: ${u.skillRaw}\nExperience: ${u.experience}\nProject type: ${type}\nDifficulty: ${difficulty}\nEstimated duration: ${duration}\nMarket: Nigeria/West Africa freelancers, price in Naira (NGN).`,
-      `Suggest 3 pricing packages (Basic, Standard, Premium) for this freelance project. Output JSON as an array of exactly 3 objects, each with keys: name, price (a plain number in NGN, realistic for the Nigerian freelance market), description (under 18 words), includes (array of 3-4 short deliverables).`,
-      true
-    );
-    STATE.pricingPkgs = out;
-    await S.set('pricingPkgs', out);
-    document.getElementById('pricingOutput').innerHTML = renderPricingPkgs(out);
-    useCredit();
-  }catch(e){ console.error(e); toast('AI request failed'); }
-  btn.innerHTML='✨ Suggest packages'; btn.disabled=false;
-}
-
-const SOCIAL_PLATFORMS = ['TikTok','Instagram','Facebook','LinkedIn','X'];
-function SocialView(){
-  return `
-  <div class="card" style="margin-bottom:22px;">
-    <div class="section-title" style="margin-bottom:14px;">AI Social Media Generator</div>
-    <label>Platform</label>
-    <div class="chip-select" id="platSelect" style="margin-bottom:16px;">
-      ${SOCIAL_PLATFORMS.map((p,i)=>`<span class="chip ${i===0?'active':''}" onclick="selectChipGroup('platSelect',this)">${p}</span>`).join('')}
-    </div>
-    <div class="field"><label>What's the post about?</label><input id="socTopic" placeholder="e.g. Behind the scenes of a football highlight edit"/></div>
-    <button class="btn btn-primary" id="socBtn" onclick="generateSocial()">✨ Generate content</button>
-    <div id="socOutput"></div>
-  </div>
-  <div class="section-title" style="font-size:17px; margin-bottom:12px;">Saved content</div>
-  ${STATE.social.length===0?`<p class="muted">No saved content yet.</p>`:''}
-  ${STATE.social.map((s,i)=>`<div class="card" style="margin-bottom:12px;"><div style="display:flex; justify-content:space-between;"><span class="pill">${s.platform}</span><button class="btn btn-ghost btn-sm" onclick="deleteSocial(${i})">Delete</button></div><p style="font-weight:700; margin-top:10px;">${escapeHtml(s.hook)}</p><p style="font-size:14px; margin-top:6px; white-space:pre-wrap;">${escapeHtml(s.caption)}</p></div>`).join('')}
-  `;
-}
-async function generateSocial(){
-  if(creditsLeft()<=0) return showUpgradeModal();
-  const platform = document.querySelector('#platSelect .chip.active').textContent;
-  const topic = document.getElementById('socTopic').value.trim() || 'promoting my freelance services';
-  const btn = document.getElementById('socBtn');
-  btn.innerHTML='<span class="spinner spinner-dark"></span> Creating…'; btn.disabled=true;
-  const u = STATE.user;
-  try{
-    const out = await askAI(
-      `Freelancer: ${u.headline}, skill: ${u.skillRaw}\nPlatform: ${platform}\nTopic: ${topic}`,
-      `Create a ${platform} post for this freelancer. Output JSON with keys: hook (under 12 words, scroll-stopping), caption (2-4 sentences, platform-appropriate tone, include 3-5 relevant hashtags at the end), ideas (array of 3 short follow-up content ideas).`,
-      true
-    );
-    document.getElementById('socOutput').innerHTML = `
-      <div class="gen-output"><b>${escapeHtml(out.hook)}</b>\n\n${escapeHtml(out.caption)}</div>
-      <div class="muted" style="font-size:13px; margin-top:10px;">More ideas: ${out.ideas.map(escapeHtml).join(' · ')}</div>
-      <div class="copy-row">
-        <button class="btn btn-ghost btn-sm" onclick="copyText(this)" data-text="${encodeURIComponent(out.hook+'\\n\\n'+out.caption)}">📋 Copy</button>
-        <button class="btn btn-primary btn-sm" onclick="saveSocial('${platform}','${encodeURIComponent(out.hook)}','${encodeURIComponent(out.caption)}')">💾 Save</button>
-      </div>`;
-    useCredit();
-  }catch(e){ console.error(e); toast('AI request failed'); }
-  btn.innerHTML='✨ Generate content'; btn.disabled=false;
-}
-async function saveSocial(platform, encHook, encCaption){
-  STATE.social.unshift({platform, hook:decodeURIComponent(encHook), caption:decodeURIComponent(encCaption)});
-  await S.set('social', STATE.social); render(); toast('Saved');
-}
-async function deleteSocial(i){ STATE.social.splice(i,1); await S.set('social',STATE.social); render(); }
-
-function SubscriptionView(){
-  return `
-  <div class="card" style="margin-bottom:22px;">
-    <div class="section-title" style="margin-bottom:6px;">Current plan</div>
-    <p class="muted" style="font-size:14px; margin-bottom:16px;">You're on the <b style="color:var(--text); text-transform:capitalize;">${STATE.plan}</b> plan · ${creditsLeft()} AI credits left this month</p>
-    ${PricingCardsInApp()}
-  </div>
-  <div class="card">
-    <div class="section-title" style="font-size:16px; margin-bottom:8px;">Billing</div>
-    <p class="muted" style="font-size:13.5px; margin-bottom:14px;">Payments and invoices are managed securely through Stripe. You'll be redirected to Stripe Checkout to subscribe, and can manage or cancel anytime via the Stripe Customer Portal.</p>
-    <button class="btn btn-ghost btn-sm" onclick="toast('This opens the Stripe Customer Portal in production.')">Manage billing</button>
-  </div>`;
-}
-function PricingCardsInApp(){
-  const plans = [
-    {id:'free', name:'Free', price:'₦0', feats:['Freelancer profile','10 AI generations/mo','Basic portfolio','Basic website + branding']},
-    {id:'pro', name:'Pro', price:'₦8,500/mo', feats:['150 AI generations/mo','Unlimited proposals','Custom website, no branding','Custom domain support']},
-    {id:'business', name:'Business', price:'₦22,000/mo', feats:['500 AI generations/mo','Multiple websites','Advanced analytics','Priority features']}
-  ];
-  return `<div class="pricing-grid">${plans.map(p=>`
-    <div class="price-card ${STATE.plan===p.id?'featured':''}">
-      ${STATE.plan===p.id?'<div class="pill badge-gold">Current</div>':''}
-      <h3>${p.name}</h3><div class="amt">${p.price}</div>
-      <ul>${p.feats.map(f=>`<li><span class="check">✓</span> ${f}</li>`).join('')}</ul>
-      <button class="btn ${STATE.plan===p.id?'btn-ghost':'btn-primary'} btn-block" ${STATE.plan===p.id?'disabled':''} onclick="startCheckout('${p.id}')">${STATE.plan===p.id?'Current plan':'Upgrade — pay with Stripe'}</button>
-    </div>`).join('')}</div>`;
-}
-function startCheckout(planId){
-  if(planId==='free'){ return; }
-  document.getElementById('dashContent').insertAdjacentHTML('beforeend', `
-  <div class="modal-bg" onclick="if(event.target===this)this.remove()">
-    <div class="modal" style="text-align:center;">
-      <div style="font-size:34px; margin-bottom:10px;">💳</div>
-      <h3 style="margin-bottom:10px;">Redirecting to Stripe Checkout</h3>
-      <p class="muted" style="font-size:14px; margin-bottom:20px;">In production, this button opens a real Stripe Checkout session for the ${planId} plan. Card details are handled entirely by Stripe — never by AI Freelancer's servers. This demo simulates a successful payment.</p>
-      <button class="btn btn-primary btn-block" onclick="simulateUpgrade('${planId}')">Simulate successful payment</button>
-      <button class="btn btn-ghost btn-block" style="margin-top:8px;" onclick="this.closest('.modal-bg').remove()">Cancel</button>
-    </div>
-  </div>`);
-}
-async function simulateUpgrade(planId){
-  STATE.plan = planId;
-  STATE.usage.limit = planId==='pro'?150:planId==='business'?500:10;
-  await S.set('plan', STATE.plan); await S.set('usage', STATE.usage);
-  document.querySelector('.modal-bg').remove();
-  toast(`Upgraded to ${planId.toUpperCase()} 🎉`);
-  render();
-}
-
-function SettingsView(){
-  const u = STATE.user;
-  return `
-  <div class="card" style="max-width:560px;">
-    <div class="section-title" style="margin-bottom:18px;">Account settings</div>
-    <div class="field"><label>Name</label><input value="${escapeHtml(u.name)}" onblur="saveField('user','name',this.value)"/></div>
-    <div class="field"><label>Email</label><input value="${escapeHtml(u.email)}" onblur="saveField('user','email',this.value)"/></div>
-    <div class="field"><label>WhatsApp</label><input value="${escapeHtml(u.whatsapp)}" onblur="saveField('user','whatsapp',this.value)"/></div>
-    <div class="field"><label>Location</label><input value="${escapeHtml(u.location)}" onblur="saveField('user','location',this.value)"/></div>
-    <label>Theme</label>
-    <div class="chip-select" style="margin-bottom:10px;">
-      <span class="chip ${STATE.theme==='light'?'active':''}" onclick="setTheme('light')">☀ Light</span>
-      <span class="chip ${STATE.theme==='dark'?'active':''}" onclick="setTheme('dark')">☾ Dark</span>
-    </div>
-    <hr style="border:none; border-top:1px solid var(--border); margin:20px 0;">
-    <p class="muted" style="font-size:13px;">Custom domain support is available on Pro and Business plans.</p>
-  </div>`;
-}
-function setTheme(t){ STATE.theme=t; document.documentElement.setAttribute('data-theme',t); S.set('theme',t); render(); }
-
-function showUpgradeModal(){
-  document.getElementById('dashContent')?.insertAdjacentHTML('beforeend', `
-  <div class="modal-bg" onclick="if(event.target===this)this.remove()">
-    <div class="modal" style="text-align:center;">
-      <div style="font-size:32px;">⚡</div>
-      <h3 style="margin:10px 0;">You're out of AI credits</h3>
-      <p class="muted" style="font-size:14px; margin-bottom:20px;">Upgrade your plan to keep generating proposals, messages and more.</p>
-      <a href="#/dashboard/subscription" class="btn btn-primary btn-block" onclick="this.closest('.modal-bg').remove()">View plans</a>
-    </div>
-  </div>`);
-}
-</script>
-
-<script>
-/* ============ ADMIN (owner-only demo view) ============ */
-function AdminPage(){
-  return `
-  <div style="min-height:100vh; background:var(--bg-sunken);">
-    <div class="topbar" style="position:static; background:var(--bg-elevated);">
-      <a href="#/dashboard" class="logo"><span class="logo-mark">AF</span> AI Freelancer</a>
-      <span class="pill badge-gold">⛨ Admin — owner only</span>
-    </div>
-    <div class="content wrap">
-      <div class="card" style="margin-bottom:20px; background:rgba(213,71,60,.08); border-color:var(--danger);">
-        <b style="color:var(--danger);">Demo notice:</b> <span class="muted" style="font-size:13.5px;">This view uses local sample data. In production, this route must be protected by real server-side authentication checking an owner/admin role — never by hiding a link on the frontend.</span>
-      </div>
-      <div class="stat-grid">
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Total users</span><div class="num">1,284</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Active subscriptions</span><div class="num">312</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Free users</span><div class="num">972</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Pro users</span><div class="num">255</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Business users</span><div class="num">57</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">MRR</span><div class="num">₦3.1M</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">AI generations (30d)</span><div class="num">48,920</div></div>
-        <div class="stat-card"><span class="muted" style="font-size:13px;">Websites created</span><div class="num">1,050</div></div>
-      </div>
-      <div class="two-col">
-        <div class="card">
-          <div class="section-title" style="font-size:17px; margin-bottom:14px;">Recent payment events</div>
-          <table>
-            <tr><th>User</th><th>Event</th><th>Plan</th><th>Status</th></tr>
-            ${[['tobi.o***','checkout.session.completed','Pro','✅ Success'],['funke.a***','invoice.payment_failed','Business','⚠ Failed'],['chidi.k***','customer.subscription.updated','Pro','✅ Success'],['amaka.o***','checkout.session.completed','Business','✅ Success']]
-              .map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
-          </table>
-        </div>
-        <div class="card">
-          <div class="section-title" style="font-size:17px; margin-bottom:14px;">Manage users</div>
-          <table>
-            <tr><th>User</th><th>Plan</th><th></th></tr>
-            ${[['Tobi O.','Pro'],['Funke A.','Business'],['Chidi K.','Free']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><button class="btn btn-ghost btn-sm" onclick="toast('Would open user management in production')">Manage</button></td></tr>`).join('')}
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>`;
+function escapeAttr(str){
+  return String(str).replace(/"/g,'&quot;');
 }
 </script>
 </body>
